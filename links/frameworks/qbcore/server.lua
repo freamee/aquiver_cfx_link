@@ -6,25 +6,25 @@ end
 
 local QBCore     = exports["qb-core"]:GetCoreObject()
 
-_G.getCash       = function(targetSource)
+_G.GetCash       = function(targetSource)
     local player = QBCore.Functions.GetPlayer(targetSource)
 
     return player.Function.GetMoney("cash")
 end
 
-_G.addCash       = function(targetSource, count)
+_G.AddCash       = function(targetSource, count)
     local player = QBCore.Functions.GetPlayer(targetSource)
 
     return player.Functions.AddMoney("cash", count)
 end
 
-_G.removeCash    = function(targetSource, count)
+_G.RemoveCash    = function(targetSource, count)
     local player = QBCore.Functions.GetPlayer(targetSource)
 
     return player.Functions.RemoveMoney("cash", count)
 end
 
-_G.getName       = function(targetSource)
+_G.GetName       = function(targetSource)
     local player = QBCore.Functions.GetPlayer(targetSource)
 
     if not player or not player.PlayerData or not player.PlayerData.charinfo then
@@ -42,13 +42,13 @@ _G.getName       = function(targetSource)
     return GetPlayerName(targetSource) or "Unknown"
 end
 
-_G.getIdentifier = function(targetSource)
+_G.GetIdentifier = function(targetSource)
     local player = QBCore.Functions.GetPlayer(targetSource)
 
     return player.PlayerData.citizenid
 end
 
-_G.notification  = function(targetSource, message, type, title)
+_G.Notification  = function(targetSource, message, type, title)
     local player = ESX.GetPlayerFromId(targetSource)
 
     return player.showNotification(message, type, nil, title)

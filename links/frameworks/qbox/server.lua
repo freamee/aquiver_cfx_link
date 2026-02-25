@@ -4,19 +4,19 @@ if resourceState ~= "started" and resourceState ~= "starting" then
     return
 end
 
-_G.getCash       = function(targetSource)
+_G.GetCash       = function(targetSource)
     return exports["qbx_core"]:GetMoney(targetSource, 'cash')
 end
 
-_G.addCash       = function(targetSource, count)
+_G.AddCash       = function(targetSource, count)
     return exports["qbx_core"]:AddMoney(targetSource, "cash", count)
 end
 
-_G.removeCash    = function(targetSource, count)
+_G.RemoveCash    = function(targetSource, count)
     return exports["qbx_core"]:RemoveMoney(targetSource, 'cash', amount)
 end
 
-_G.getName       = function(targetSource)
+_G.GetName       = function(targetSource)
     local player = exports["qbx_core"]:GetPlayer(targetSource)
 
     if not player or not player.PlayerData or not player.PlayerData.charinfo then
@@ -34,12 +34,12 @@ _G.getName       = function(targetSource)
     return GetPlayerName(player) or 'Unknown'
 end
 
-_G.getIdentifier = function(targetSource)
+_G.GetIdentifier = function(targetSource)
     local player = exports["qbx_core"]:GetPlayer(targetSource)
 
     return player.PlayerData.citizenid
 end
 
-_G.notification  = function(targetSource, message, type, title)
+_G.Notification  = function(targetSource, message, type, title)
     return exports["qbx_core"]:Notify(targetSource, message, type, nil, title)
 end

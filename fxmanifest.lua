@@ -19,7 +19,11 @@ client_scripts {
 }
 
 server_scripts {
+    "links/frameworks/esx/server.lua",
+    "links/frameworks/qbcore/server.lua",
+    "links/frameworks/qbox/server.lua",
 
+    "server/exports.lua"
 }
 
 files {

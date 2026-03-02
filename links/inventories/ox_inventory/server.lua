@@ -13,3 +13,7 @@ end
 _G.CanCarryItem = function(targetSource, id, count)
     return exports["ox_inventory"]:CanCarryItem(targetSource, id, count)
 end
+
+_G.GetInventoryItemCount = function(targetSource, id)
+    return exports["ox_inventory"]:GetItemCount(targetSource, id)
+end

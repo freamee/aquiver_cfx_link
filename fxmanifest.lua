@@ -15,13 +15,15 @@ shared_scripts {
 }
 
 client_scripts {
-
+    "client/GameCursor.lua"
 }
 
 server_scripts {
     "links/frameworks/esx/server.lua",
     "links/frameworks/qbcore/server.lua",
     "links/frameworks/qbox/server.lua",
+
+    "links/inventories/ox_inventory/server.lua",
 
     "server/exports.lua"
 }

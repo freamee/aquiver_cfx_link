@@ -49,7 +49,7 @@ _G.GetIdentifier = function(targetSource)
 end
 
 _G.Notification  = function(targetSource, message, type, title)
-    local player = ESX.GetPlayerFromId(targetSource)
+    local player = QBCore.Functions.GetPlayer(targetSource)
 
-    return player.showNotification(message, type, nil, title)
+    return player.Functions.Notify(message, type, 5000)
 end

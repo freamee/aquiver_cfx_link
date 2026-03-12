@@ -8,7 +8,9 @@ function GameCursor:set(newState)
 
     Citizen.CreateThread(function()
         while self._currentState do
-            SetMouseCursorThisFrame()
+            if not IsNuiFocused() then
+                SetMouseCursorThisFrame()
+            end
 
             DisableAllControlActions(0)
 

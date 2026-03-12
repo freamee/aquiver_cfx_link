@@ -4,26 +4,32 @@ if resourceState ~= "started" and resourceState ~= "starting" then
     return
 end
 
-_G.GetCash       = function(targetSource)
-    return exports["qbx_core"]:GetMoney(targetSource, 'cash')
+_G.GetCash = function(targetSource)
+    local Player = exports["qbx_core"]:GetPlayer(targetSource)
+    if not Player then return 0 end
+    return Player.PlayerData.money.cash or 0
 end
 
-_G.AddCash       = function(targetSource, count)
-    return exports["qbx_core"]:AddMoney(targetSource, "cash", count)
+_G.AddCash = function(targetSource, amount)
+    local Player = exports["qbx_core"]:GetPlayer(targetSource)
+    if not Player then return false end
+    return Player.Functions.AddMoney("cash", amount)
 end
 
-_G.RemoveCash    = function(targetSource, count)
-    return exports["qbx_core"]:RemoveMoney(targetSource, 'cash', amount)
+_G.RemoveCash = function(targetSource, amount)
+    local Player = exports["qbx_core"]:GetPlayer(targetSource)
+    if not Player then return false end
+    return Player.Functions.RemoveMoney("cash", amount)
 end
 
-_G.GetName       = function(targetSource)
-    local player = exports["qbx_core"]:GetPlayer(targetSource)
+_G.GetName = function(targetSource)
+    local Player = exports["qbx_core"]:GetPlayer(targetSource)
 
-    if not player or not player.PlayerData or not player.PlayerData.charinfo then
+    if not Player or not Player.PlayerData or not Player.PlayerData.charinfo then
         return GetPlayerName(targetSource) or "Unknown"
     end
 
-    local charinfo = player.PlayerData.charinfo
+    local charinfo = Player.PlayerData.charinfo
     local firstName = charinfo.firstname
     local lastName = charinfo.lastname
 
@@ -31,15 +37,30 @@ _G.GetName       = function(targetSource)
         return firstName .. ' ' .. lastName
     end
 
-    return GetPlayerName(player) or 'Unknown'
+    return GetPlayerName(targetSource) or 'Unknown'
 end
 
 _G.GetIdentifier = function(targetSource)
-    local player = exports["qbx_core"]:GetPlayer(targetSource)
+    local Player = exports["qbx_core"]:GetPlayer(targetSource)
 
-    return player.PlayerData.citizenid
+    if not Player or not Player.PlayerData then
+        return nil
+    end
+
+    return Player.PlayerData.citizenid
 end
 
-_G.Notification  = function(targetSource, message, type, title)
-    return exports["qbx_core"]:Notify(targetSource, message, type, nil, title)
+_G.Notification = function(targetSource, message, notifyType, title)
+    -- qbx_core verwendet ox_lib für Notifications
+    if notifyType == "inform" then notifyType = "info" end
+
+    local notifyData = {
+        title = title or "Notification",
+        description = message,
+        type = notifyType or "info",
+        position = 'top-center',
+        duration = 5000
+    }
+
+    TriggerClientEvent('ox_lib:notify', targetSource, notifyData)
 end

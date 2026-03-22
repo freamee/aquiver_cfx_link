@@ -4,6 +4,8 @@ if resourceState ~= "started" and resourceState ~= "starting" then
     return
 end
 
+print("^4[Aquiver-CFX]^2 Framework: qbx_core")
+
 _G.GetCash = function(targetSource)
     local Player = exports["qbx_core"]:GetPlayer(targetSource)
     if not Player then return 0 end

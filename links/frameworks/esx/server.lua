@@ -4,6 +4,8 @@ if resourceState ~= "started" and resourceState ~= "starting" then
     return
 end
 
+print("^4[Aquiver-CFX]^2 Framework: es_extended")
+
 local ESX = exports['es_extended']:getSharedObject()
 
 _G.GetCash = function(targetSource)

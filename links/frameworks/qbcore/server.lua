@@ -4,6 +4,8 @@ if resourceState ~= "started" and resourceState ~= "starting" then
     return
 end
 
+print("^4[Aquiver-CFX]^2 Framework: qb-core")
+
 local QBCore     = exports["qb-core"]:GetCoreObject()
 
 _G.GetCash       = function(targetSource)

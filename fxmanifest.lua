@@ -2,13 +2,15 @@ fx_version 'adamant'
 
 game 'gta5'
 
-version "1.0"
+version "1.0.1"
 
 lua54 "yes"
 
 escrow_ignore {
     "**.lua"
 }
+
+-- provide 'aquiver_cfx_link'
 
 shared_scripts {
 
@@ -31,3 +33,11 @@ server_scripts {
 files {
     "client/**.lua"
 }
+
+
+--[[
+1.0.1:
+    - Quasar inventory support
+    - On resource start it prints out the recognized framework & inventory
+
+]]

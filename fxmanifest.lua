@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 
-version "1.0.1"
+version "1.0.2"
 
 lua54 "yes"
 
@@ -39,5 +39,8 @@ files {
 1.0.1:
     - Quasar inventory support
     - On resource start it prints out the recognized framework & inventory
+
+1.0.2:
+    - You can now disable the cursor keybind registering in the `config.lua` file.
 
 ]]

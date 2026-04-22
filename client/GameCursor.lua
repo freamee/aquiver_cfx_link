@@ -30,8 +30,10 @@ function GameCursor:toggle()
     self:set(not self:get())
 end
 
-RegisterCommand("TOGGLE_GAME_CURSOR_STATE", function()
-    GameCursor:toggle()
-end, false)
+if Config.EnableCursorKey then
+    RegisterCommand("TOGGLE_GAME_CURSOR_STATE", function()
+        GameCursor:toggle()
+    end, false)
 
-RegisterKeyMapping("TOGGLE_GAME_CURSOR_STATE", "Game Interact Cursor", "keyboard", "m")
+    RegisterKeyMapping("TOGGLE_GAME_CURSOR_STATE", "Game Interact Cursor", "keyboard", "m")
+end

@@ -13,7 +13,7 @@ escrow_ignore {
 -- provide 'aquiver_cfx_link'
 
 shared_scripts {
-
+    "config.lua"
 }
 
 client_scripts {

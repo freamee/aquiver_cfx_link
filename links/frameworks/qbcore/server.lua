@@ -11,7 +11,7 @@ local QBCore     = exports["qb-core"]:GetCoreObject()
 _G.GetCash       = function(targetSource)
     local player = QBCore.Functions.GetPlayer(targetSource)
 
-    return player.Function.GetMoney("cash")
+    return player.Functions.GetMoney("cash")
 end
 
 _G.AddCash       = function(targetSource, count)

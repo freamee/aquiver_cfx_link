@@ -17,7 +17,11 @@ shared_scripts {
 }
 
 client_scripts {
-    "client/GameCursor.lua"
+    "client/GameCursor.lua",
+
+    "links/inventories/ox_inventory/client.lua",
+
+    "client_exports.lua"
 }
 
 server_scripts {
@@ -26,6 +30,7 @@ server_scripts {
     "links/frameworks/qbox/server.lua",
 
     "links/inventories/ox_inventory/server.lua",
+    "links/inventories/quasar_inventory/server.lua",
 
     "server/exports.lua"
 }

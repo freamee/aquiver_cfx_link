@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 
-version "1.0.3"
+version "1.0.4"
 
 lua54 "yes"
 
@@ -20,6 +20,8 @@ client_scripts {
     "client/GameCursor.lua",
 
     "links/inventories/ox_inventory/client.lua",
+    "links/inventories/quasar_inventory/client.lua",
+    "links/inventories/one_inventory/client.lua",
 
     "client_exports.lua"
 }
@@ -48,4 +50,10 @@ files {
 1.0.2:
     - You can now disable the cursor keybind registering in the `config.lua` file.
 
+1.0.3:
+    - 
+
+1.0.4:
+    - Added support for one_inventory
+    - Fixed the quasar inventory support, client export functions was missing
 ]]

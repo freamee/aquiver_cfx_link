@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 
-version "1.0.4"
+version "1.0.5"
 
 lua54 "yes"
 
@@ -51,7 +51,7 @@ files {
     - You can now disable the cursor keybind registering in the `config.lua` file.
 
 1.0.3:
-    - 
+    -
 
 1.0.4:
     - Added support for one_inventory

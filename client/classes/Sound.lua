@@ -16,16 +16,30 @@ function Sound:getId()
 end
 
 ---@param entity number
-function Sound:playFromEntity(entity)
+---@param isNetwork boolean
+function Sound:playFromEntity(entity, isNetwork)
     self._id = GetSoundId()
 
-    PlaySoundFromEntity(self._id, self._audioName, entity, self._audioRef, false, false)
+    PlaySoundFromEntity(self._id, self._audioName, entity, self._audioRef, isNetwork, false)
 end
 
 ---@param position vector3
 ---@param range number
-function Sound:playSoundAt(position, range)
-    PlaySoundFromCoord(self._id, self._audioName, position.x, position.y, position.z, self._audioRef, false, range, false)
+---@param isNetwork boolean
+function Sound:playSoundAt(position, range, isNetwork)
+    self._id = GetSoundId()
+
+    PlaySoundFromCoord(
+        self._id,
+        self._audioName,
+        position.x,
+        position.y,
+        position.z,
+        self._audioRef,
+        isNetwork,
+        range,
+        false
+    )
 end
 
 function Sound:destroy()

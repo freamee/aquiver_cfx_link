@@ -5,6 +5,8 @@
 ---@field private _started boolean
 local Particle = lib.class("C_Particle")
 
+---@param dictionary string
+---@param name string
 function Particle:constructor(dictionary, name)
     self._id = -1
     self._dictionary = dictionary
@@ -33,6 +35,10 @@ function Particle:stop()
     if not self._started then return end
 
     self._started = false
+
+    StopParticleFxLooped(self._id, false)
+
+    self._id = -1
 end
 
 ---@param entity number
@@ -67,8 +73,17 @@ end
 ---@param position vector3
 ---@param rotation vector3
 ---@param scale number
-function Particle:startAtPosition(position, rotation, scale)
-    StartParticleFxLoopedAtCoord(
+---@param isNetwork boolean
+function Particle:startAtPosition(position, rotation, scale, isNetwork)
+    if not self._started then return end
+
+    self._started = true
+
+    self:request()
+
+    UseParticleFxAsset(self._dictionary)
+
+    self._id = StartParticleFxLoopedAtCoord(
         self._name,
         position.x,
         position.y,
@@ -82,6 +97,46 @@ function Particle:startAtPosition(position, rotation, scale)
         false,
         false
     )
+end
+
+---@param position vector3
+---@param rotation vector3
+---@param scale number
+---@param isNetwork boolean
+function Particle:startNonLoopedAtPosition(position, rotation, scale, isNetwork)
+    self:request()
+
+    UseParticleFxAsset(self._dictionary)
+
+    if isNetwork then
+        StartNetworkedParticleFxNonLoopedAtCoord(
+            self._name,
+            position.x,
+            position.y,
+            position.z,
+            rotation.x,
+            rotation.y,
+            rotation.z,
+            scale,
+            false,
+            false,
+            false
+        )
+    else
+        self._id = StartParticleFxNonLoopedAtCoord(
+            self._name,
+            position.x,
+            position.y,
+            position.z,
+            rotation.x,
+            rotation.y,
+            rotation.z,
+            scale,
+            false,
+            false,
+            false
+        )
+    end
 end
 
 return Particle

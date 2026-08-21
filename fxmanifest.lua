@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 
-version "1.0.5"
+version "2.0"
 
 lua54 "yes"
 
@@ -38,6 +38,7 @@ server_scripts {
 }
 
 files {
+    "txd/**",
     "client/**.lua"
 }
 
@@ -49,6 +50,7 @@ files {
 
 1.0.2:
     - You can now disable the cursor keybind registering in the `config.lua` file.
+
 
 1.0.3:
     -

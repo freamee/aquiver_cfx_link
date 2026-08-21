@@ -111,8 +111,7 @@ function Graphics:drawSprite3D(textureDict, textureName, position, scale, color,
 
     local distance = #(camPos - position)
 
-    scale = (scale / distance) * 5;
-    scale = math.min(math.max(scale, 0.15), 3.5);
+    scale = (scale / distance) * 5
 
     self:drawSprite2D(textureDict, textureName, vector2(screenX, screenY), scale, color, heading)
 end
@@ -229,28 +228,43 @@ end
 ---@param cb fun()
 ---@param sprite? [string, string, number, [number, number, number, number]]
 ---@param text? string
-function Graphics:drawInteractive3D(position, scale, cb, sprite, text)
+---@param interactionDistance? number
+function Graphics:drawInteractive3D(position, scale, cb, sprite, text, interactionDistance)
     local response, screenX, screenY = GetScreenCoordFromWorldCoord(position.x, position.y, position.z)
 
     if response then
         self:drawInteractive2D(
+            position,
             vector2(screenX, screenY),
             scale,
             cb,
             sprite,
-            text
+            text,
+            interactionDistance
         )
     end
 end
 
--- [dictionary, name, scale, color]
-
+---@param worldPosition vector3
 ---@param position vector2
 ---@param scale number
 ---@param cb fun()
 ---@param sprite? [string, string, number, [number, number, number, number]]
 ---@param text? string
-function Graphics:drawInteractive2D(position, scale, cb, sprite, text)
+---@param interactionDistance? number
+function Graphics:drawInteractive2D(worldPosition, position, scale, cb, sprite, text, interactionDistance)
+    interactionDistance = interactionDistance or 3.0
+
+    local localPed = PlayerPedId()
+    local localPosition = GetEntityCoords(localPed)
+    local distanceTo = #(localPosition - worldPosition)
+
+    local alpha = math.floor((1.0 - math.min(distanceTo / interactionDistance, 1.0)) * 255)
+
+    if alpha <= 0 then
+        return
+    end
+
     local aspectRatio = GetScreenAspectRatio(false)
     local width = scale / aspectRatio
     local height = scale
@@ -267,21 +281,25 @@ function Graphics:drawInteractive2D(position, scale, cb, sprite, text)
         cursorY >= position.y - height / 2 and
         cursorY <= position.y + height / 2
 
-    local drawColor = isHovering and { 50, 50, 50, 225 } or { 25, 25, 25, 225 }
+    local drawColor = isHovering and { 50, 50, 50, alpha } or { 25, 25, 25, alpha }
 
-    DrawRect(
-        position.x,
-        position.y,
-        width,
-        height,
-        drawColor[1],
-        drawColor[2],
-        drawColor[3],
-        drawColor[4]
+    self:drawSprite2D(
+        "aquiver_cfx",
+        "interaction_bg",
+        position,
+        0.75,
+        drawColor
     )
 
     if sprite then
         local textureDict, textureName, spriteScale, spriteColor = table.unpack(sprite)
+
+        spriteColor = {
+            spriteColor[1],
+            spriteColor[2],
+            spriteColor[3],
+            alpha
+        }
 
         self:drawSprite2D(textureDict, textureName, position, spriteScale, spriteColor)
     end
@@ -289,7 +307,7 @@ function Graphics:drawInteractive2D(position, scale, cb, sprite, text)
     if isHovering then
         if text then
             self:drawTextThisFrame2D(
-                position + vector2(0, -0.035),
+                vector2(cursorX + 0.02, cursorY + 0.02),
                 text,
                 0.2,
                 true

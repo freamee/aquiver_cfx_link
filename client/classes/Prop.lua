@@ -24,6 +24,11 @@ function Prop:constructor(modelHash, position, rotation)
     self._moving = false
 end
 
+---@param variation number
+function Prop:setTextureVariation(variation)
+    SetObjectTextureVariation(self._entity, variation)
+end
+
 function Prop:getTextureVariation()
     return GetObjectTextureVariation(self._entity)
 end

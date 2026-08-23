@@ -10,7 +10,7 @@ escrow_ignore {
     "**.lua"
 }
 
--- provide 'aquiver_cfx_link'
+provide 'aquiver_cfx_link'
 
 shared_scripts {
     "config.lua"

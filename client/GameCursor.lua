@@ -1,4 +1,4 @@
-GameCursor = {}
+local GameCursor = {}
 GameCursor._currentState = false
 
 function GameCursor:set(newState)
@@ -37,3 +37,5 @@ if Config.EnableCursorKey then
 
     RegisterKeyMapping("TOGGLE_GAME_CURSOR_STATE", "Game Interact Cursor", "keyboard", "m")
 end
+
+return GameCursor

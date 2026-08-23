@@ -1,64 +1,90 @@
 ---@class Entity : OxClass
 ---@field protected _entity number
-local Entity = lib.class("Entity")
+---@field protected _state StateBag
+local Actor = lib.class("Entity")
 
 ---@param entity number
-function Entity:constructor(entity)
+function Actor:constructor(entity)
     self._entity = entity
+    self._state = Entity(self._entity).state
 end
 
-function Entity:getScriptId()
+function Actor:getScriptId()
     return self._entity
 end
 
+function Actor:getStatebag()
+    return self._state
+end
+
+---@param destination vector3
+function Actor:distanceTo(destination)
+    return #(self:getPosition() - destination)
+end
+
+---@param destination vector3
+---@param range number
+function Actor:isInRange(destination, range)
+    return self:distanceTo(destination) <= range
+end
+
 ---@param offsetPosition vector3
-function Entity:getOffsetPosition(offsetPosition)
+function Actor:getOffsetPosition(offsetPosition)
     return GetOffsetFromEntityInWorldCoords(self._entity, offsetPosition.x, offsetPosition.y, offsetPosition.z)
 end
 
-function Entity:getFreezeState()
-    return IsEntityFrozen(self._entity)
+function Actor:getAlpha()
+    return GetEntityAlpha(self._entity)
+end
+
+---@param alpha number
+function Actor:setAlpha(alpha)
+    SetEntityAlpha(self._entity, alpha, true)
+end
+
+function Actor:getFreezeState()
+    return IsEntityPositionFrozen(self._entity)
 end
 
 ---@param newState boolean
-function Entity:setFreezeState(newState)
+function Actor:setFreezeState(newState)
     FreezeEntityPosition(self._entity, newState)
 end
 
-function Entity:getCollisionState()
+function Actor:getCollisionState()
     return GetEntityCollisionDisabled(self._entity)
 end
 
 ---@param newState boolean
 ---@param keepPhysics boolean
-function Entity:setCollisionState(newState, keepPhysics)
+function Actor:setCollisionState(newState, keepPhysics)
     SetEntityCollision(self._entity, newState, keepPhysics)
 end
 
-function Entity:getRotation()
+function Actor:getRotation()
     return GetEntityRotation(self._entity)
 end
 
 ---@param rotation vector3
-function Entity:setRotation(rotation)
+function Actor:setRotation(rotation)
     SetEntityRotation(self._entity, rotation.x, rotation.y, rotation.z, 2, false)
 end
 
-function Entity:getPosition()
+function Actor:getPosition()
     return GetEntityCoords(self._entity)
 end
 
 ---@param position vector3
-function Entity:setPosition(position)
+function Actor:setPosition(position)
     SetEntityCoords(self._entity, position.x, position.y, position.z, false, false, false, false)
 end
 
 ---@param newState boolean
-function Entity:setVisibleState(newState)
+function Actor:setVisibleState(newState)
     SetEntityVisible(self._entity, newState, newState)
 end
 
-function Entity:getVisibleState()
+function Actor:getVisibleState()
     return IsEntityVisible(self._entity)
 end
 
@@ -67,7 +93,7 @@ end
 ---@param offsetPosition vector3
 ---@param offsetRotation vector3
 ---@param collision boolean
-function Entity:attach(to, boneIndex, offsetPosition, offsetRotation, collision)
+function Actor:attach(to, boneIndex, offsetPosition, offsetRotation, collision)
     AttachEntityToEntity(
         self._entity,
         to:getScriptId(),
@@ -87,12 +113,12 @@ function Entity:attach(to, boneIndex, offsetPosition, offsetRotation, collision)
     )
 end
 
-function Entity:detach()
+function Actor:detach()
     DetachEntity(self._entity, true, true)
 end
 
-function Entity:destroy()
+function Actor:destroy()
     DeleteEntity(self._entity)
 end
 
-return Entity
+return Actor

@@ -1,4 +1,4 @@
-function DrawSpriteMeter3D(dictionary, textureName, x, y, z, width, height, percentage, color)
+local function DrawSpriteMeter3D(dictionary, textureName, x, y, z, width, height, percentage, color)
     local found, screenX, screenY = GetScreenCoordFromWorldCoord(
         x, y, z
     )
@@ -7,3 +7,5 @@ function DrawSpriteMeter3D(dictionary, textureName, x, y, z, width, height, perc
         DrawSpriteMeter(dictionary, textureName, screenX, screenY, width, height, percentage, color)
     end
 end
+
+return DrawSpriteMeter3D

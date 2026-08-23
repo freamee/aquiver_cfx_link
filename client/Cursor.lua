@@ -1,4 +1,4 @@
-Cursor = {}
+local Cursor = {}
 Cursor._currentState = false
 Cursor._forceState = false
 Cursor._tickState = false

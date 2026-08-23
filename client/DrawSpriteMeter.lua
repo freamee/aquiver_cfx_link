@@ -1,4 +1,4 @@
-function DrawSpriteMeter(dictionary, textureName, x, y, width, height, percentage, color)
+local function DrawSpriteMeter(dictionary, textureName, x, y, width, height, percentage, color)
     percentage = math.clamp(percentage, 0.0, 1.0)
 
     local aspectRatio = GetAspectRatio(true)
@@ -43,3 +43,5 @@ function DrawSpriteMeter(dictionary, textureName, x, y, width, height, percentag
         a
     )
 end
+
+return DrawSpriteMeter

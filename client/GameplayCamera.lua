@@ -1,4 +1,4 @@
-GameplayCamera = {}
+local GameplayCamera = {}
 
 function GameplayCamera:getPosition()
     return GetGameplayCamCoord()

@@ -1,4 +1,4 @@
-Graphics = {}
+local Graphics = {}
 
 ---@param position vector2
 ---@param text string

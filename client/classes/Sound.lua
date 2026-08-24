@@ -7,12 +7,23 @@ local Sound = lib.class("C_Sound")
 ---@param audioName string
 ---@param audioRef string
 function Sound:constructor(audioName, audioRef)
+    self._id = -1
     self._audioName = audioName
     self._audioRef = audioRef
 end
 
 function Sound:getId()
     return self._id
+end
+
+function Sound:isPlaying()
+    return self._id ~= -1
+end
+
+function Sound:stop()
+    StopSound(self._id)
+
+    self._id = -1
 end
 
 ---@param entity number

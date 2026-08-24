@@ -13,6 +13,23 @@ function Actor:getScriptId()
     return self._entity
 end
 
+function Actor:exists()
+    return DoesEntityExist(self._entity)
+end
+
+function Actor:getModelHash()
+    return GetEntityModel(self._entity)
+end
+
+---@param modelHash string
+function Actor:isModel(modelHash)
+    return self:getModelHash() == GetHashKey(modelHash)
+end
+
+function Actor:activatePhysics()
+    ActivatePhysics(self._entity)
+end
+
 function Actor:getStatebag()
     return self._state
 end
@@ -75,8 +92,30 @@ function Actor:getPosition()
 end
 
 ---@param position vector3
+function Actor:setPositionNoOffset(position)
+    SetEntityCoordsNoOffset(
+        self._entity,
+        position.x,
+        position.y,
+        position.z,
+        false,
+        false,
+        false
+    )
+end
+
+---@param position vector3
 function Actor:setPosition(position)
     SetEntityCoords(self._entity, position.x, position.y, position.z, false, false, false, false)
+end
+
+function Actor:getHeading()
+    return GetEntityHeading(self._entity)
+end
+
+---@param heading number
+function Actor:setHeading(heading)
+    SetEntityHeading(self._entity, heading)
 end
 
 ---@param newState boolean

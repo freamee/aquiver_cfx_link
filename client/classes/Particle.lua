@@ -17,6 +17,10 @@ function Particle:getId()
     return self._id
 end
 
+function Particle:isStarted()
+    return self._started
+end
+
 ---@param scale number
 function Particle:setScale(scale)
     SetParticleFxLoopedScale(self._id, scale)
@@ -137,6 +141,10 @@ function Particle:startNonLoopedAtPosition(position, rotation, scale, isNetwork)
             false
         )
     end
+end
+
+function Particle:destroy()
+    StopParticleFxLooped(self._id, false)
 end
 
 return Particle

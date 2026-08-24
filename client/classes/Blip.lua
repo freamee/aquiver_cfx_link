@@ -67,4 +67,8 @@ function Blip:setName(newName)
     EndTextCommandSetBlipName(self._entity)
 end
 
+function Blip:destroy()
+    RemoveBlip(self._entity)
+end
+
 return Blip

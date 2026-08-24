@@ -1,6 +1,5 @@
 local GameCursor = {}
 GameCursor._currentState = false
-
 function GameCursor:set(newState)
     if self._currentState == newState then return end
 
@@ -30,12 +29,10 @@ function GameCursor:toggle()
     self:set(not self:get())
 end
 
-if Config.EnableCursorKey then
-    RegisterCommand("TOGGLE_GAME_CURSOR_STATE", function()
-        GameCursor:toggle()
-    end, false)
+RegisterCommand("TOGGLE_GAME_CURSOR_STATE", function()
+    GameCursor:toggle()
+end, false)
 
-    RegisterKeyMapping("TOGGLE_GAME_CURSOR_STATE", "Game Interact Cursor", "keyboard", "m")
-end
+RegisterKeyMapping("TOGGLE_GAME_CURSOR_STATE", "Game Interact Cursor", "keyboard", "m")
 
 return GameCursor

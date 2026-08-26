@@ -62,8 +62,8 @@ end
 function Blip:setName(newName)
     self._name = newName
 
-    BeginTextCommandSetBlipName('MYBLIP')
-    AddTextComponentSubstringPlayerName(newName)
+    AddTextEntry('MY_BLIP', self._name)
+    BeginTextCommandSetBlipName('MY_BLIP')
     EndTextCommandSetBlipName(self._entity)
 end
 

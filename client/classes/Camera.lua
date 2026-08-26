@@ -18,7 +18,7 @@ function Camera:constructor()
         0,
         60.0,
         false,
-        false
+        2
     )
 end
 

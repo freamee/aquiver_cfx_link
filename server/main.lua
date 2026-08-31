@@ -4,6 +4,7 @@ local Actor = require("server.classes.Entity")
 local Ped = require("server.classes.Ped")
 
 local Inventory = require("links.inventories.inventory")
+local Proficiency = require("resources.aqv_proficiency.Proficiency")
 
 CfxServer = {}
 
@@ -38,3 +39,4 @@ CfxServer.Notification = function(targetSource, title, message, type)
 end
 
 CfxServer.Inventory = Inventory
+CfxServer.Proficiency = Proficiency

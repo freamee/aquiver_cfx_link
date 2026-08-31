@@ -3,6 +3,8 @@ local Prop = require("server.classes.Prop")
 local Actor = require("server.classes.Entity")
 local Ped = require("server.classes.Ped")
 
+local Inventory = require("links.inventories.inventory")
+
 CfxServer = {}
 
 CfxServer.Actor = {}
@@ -34,3 +36,5 @@ end
 CfxServer.Notification = function(targetSource, title, message, type)
     return _G.Notification(targetSource, message, type, title)
 end
+
+CfxServer.Inventory = Inventory

@@ -13,6 +13,10 @@ function Actor:getScriptId()
     return self._entity
 end
 
+function Actor:getNetId()
+    return NetworkGetNetworkIdFromEntity(self._entity)
+end
+
 function Actor:exists()
     return DoesEntityExist(self._entity)
 end

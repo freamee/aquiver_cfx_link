@@ -8,15 +8,18 @@ local Prop = lib.class("C_Prop", Entity)
 ---@param modelHash string | number
 ---@param position vector3
 ---@param rotation vector3
-function Prop:constructor(modelHash, position, rotation)
+---@param isNetwork boolean?
+function Prop:constructor(modelHash, position, rotation, isNetwork)
+    isNetwork = isNetwork and isNetwork or false
+
     self:super(
         CreateObjectNoOffset(
             modelHash,
             position.x,
             position.y,
             position.z,
-            false,
-            false,
+            isNetwork,
+            isNetwork,
             false
         )
     )

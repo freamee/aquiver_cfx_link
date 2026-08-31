@@ -9,6 +9,11 @@ function Blip:constructor(name, position)
     self._entity = AddBlipForCoord(position.x, position.y, position.z)
 end
 
+---@param category number
+function Blip:setCategory(category)
+    SetBlipCategory(self._entity, category)
+end
+
 ---@param newState boolean
 function Blip:setShortRangeState(newState)
     SetBlipAsShortRange(self._entity, newState)

@@ -30,8 +30,9 @@ CfxServer.GetName = function(targetSource)
     return _G.GetName(targetSource)
 end
 
+---@return string
 CfxServer.GetIdentifier = function(targetSource)
-    return _G.GetIdentifier(targetSource)
+    return _G.GetIdentifier(targetSource) --[[@as string]]
 end
 
 CfxServer.Notification = function(targetSource, title, message, type)

@@ -6,7 +6,11 @@ local Ped = require("server.classes.Ped")
 local Inventory = require("links.inventories.inventory")
 local Proficiency = require("resources.aqv_proficiency.Proficiency")
 
+local Attachment = require("attachment.AttachmentService")
+
 CfxServer = {}
+
+CfxServer.Attachment = Attachment
 
 CfxServer.Actor = {}
 CfxServer.Actor.Vehicle = Vehicle

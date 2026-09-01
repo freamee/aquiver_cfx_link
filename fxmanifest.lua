@@ -35,5 +35,6 @@ shared_scripts {
 files {
     "txd/**",
     "client/**.lua",
+    "shared/**.lua",
     "shared/**.lua"
 }

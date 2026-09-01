@@ -4,9 +4,9 @@ local Actor = require("server.classes.Entity")
 local Ped = require("server.classes.Ped")
 
 local Inventory = require("links.inventories.inventory")
-local Proficiency = require("resources.aqv_proficiency.Proficiency")
+local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
-local Attachment = require("attachment.AttachmentService")
+local Attachment = require("server.attachment.AttachmentService")
 
 CfxServer = {}
 

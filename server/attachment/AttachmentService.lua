@@ -1,4 +1,4 @@
-local Attachment = require("lua.server.Attachment.Attachment")
+local Attachment = require("server.attachment.Attachment")
 
 local AttachmentService = {}
 ---@type table<number, table<string, S_Cfx_Attachment>>

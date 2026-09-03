@@ -42,3 +42,5 @@ Cfx.Actor.Sound         = Sound
 -- Creating & Loading the texture(s)
 local txd               = CreateRuntimeTxd("aquiver_cfx")
 CreateRuntimeTextureFromImage(txd, "interaction_bg", "txd/interaction_bg.png")
+
+CfxClient = {}

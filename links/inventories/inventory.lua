@@ -31,7 +31,7 @@ end
 ---@param targetSource number
 ---@param id string
 ---@return number
-function Inventory:GetItemCount(targetSource, id)
+function Inventory.GetItemCount(targetSource, id)
     return _G.GetInventoryItemCount(targetSource, id)
 end
 

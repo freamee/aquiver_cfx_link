@@ -27,6 +27,26 @@ function Prop:constructor(modelHash, position, rotation, isNetwork)
     self._moving = false
 end
 
+---@param modelHash string
+function Prop:setModelHash(modelHash)
+    local position = self:getPosition()
+    local rotation = self:getRotation()
+
+    self:destroy()
+
+    self._entity = CreateObjectNoOffset(
+        modelHash,
+        position.x,
+        position.y,
+        position.z,
+        false,
+        false,
+        false
+    )
+
+    self:setRotation(rotation)
+end
+
 ---@param variation number
 function Prop:setTextureVariation(variation)
     SetObjectTextureVariation(self._entity, variation)

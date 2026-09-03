@@ -9,6 +9,15 @@ function Blip:constructor(name, position)
     self._entity = AddBlipForCoord(position.x, position.y, position.z)
 end
 
+---@param display number
+function Blip:setDisplay(display)
+    SetBlipDisplay(self._entity, display)
+end
+
+function Blip:getDisplay()
+    return GetBlipInfoIdDisplay(self._entity)
+end
+
 ---@param category number
 function Blip:setCategory(category)
     SetBlipCategory(self._entity, category)

@@ -1,4 +1,16 @@
+---@class ProficiencyDefinition
+---@field id string Unique, namespaced identifier (for example: "miner.mining").
+---@field name string Display name.
+---@field description? string Display description.
+---@field image? string Image path relative to the registering resource.
+---@field maxPoints number Maximum number of obtainable points.
+
 local Proficiency = {}
+
+---@param proficiency ProficiencyDefinition
+function Proficiency.Register(proficiency)
+    return exports.aqv_proficiency:registerProficiency(proficiency)
+end
 
 ---@param targetSource number
 ---@param id string

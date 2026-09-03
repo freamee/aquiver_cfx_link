@@ -43,4 +43,7 @@ Cfx.Actor.Sound         = Sound
 local txd               = CreateRuntimeTxd("aquiver_cfx")
 CreateRuntimeTextureFromImage(txd, "interaction_bg", "txd/interaction_bg.png")
 
+local Inventory = require("client.inventories.inventory")
+
 CfxClient = {}
+CfxClient.Inventory = Inventory

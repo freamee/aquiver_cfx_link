@@ -8,6 +8,17 @@ local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
 local Attachment = require("server.attachment.AttachmentService")
 
+-- Loading link framework(s)
+require("links.frameworks.esx.server")
+require("links.frameworks.qbcore.server")
+require("links.frameworks.qbox.server")
+require("links.frameworks.vrp.server")
+
+-- Loading link inventories
+require("links.inventories.one_inventory.server")
+require("links.inventories.ox_inventory.server")
+require("links.inventories.quasar_inventory.server")
+
 CfxServer = {}
 
 CfxServer.Attachment = Attachment

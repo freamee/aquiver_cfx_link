@@ -19,31 +19,35 @@ local Graphics          = require("client.Graphics")
 local DrawSpriteMeter   = require("client.DrawSpriteMeter")
 local DrawSpriteMeter3D = require("client.DrawSpriteMeter3D")
 
-Cfx.lerp                = lerp
-Cfx.Tick                = Tick
+require("links.inventories.one_inventory.client")
+require("links.inventories.ox_inventory.client")
+require("links.inventories.quasar_inventory.client")
+require("links.frameworks.esx.client")
+require("links.frameworks.qbcore.client")
+require("links.frameworks.qbox.client")
+require("links.frameworks.vrp.client")
 
-Cfx.Graphics            = Graphics
-Cfx.GameplayCamera      = GameplayCamera
-Cfx.Cursor              = Cursor
-Cfx.GameCursor          = GameCursor
-Cfx.DrawSpriteMeter     = DrawSpriteMeter
-Cfx.DrawSpriteMeter3D   = DrawSpriteMeter3D
+Cfx.lerp              = lerp
+Cfx.Tick              = Tick
+
+Cfx.Graphics          = Graphics
+Cfx.GameplayCamera    = GameplayCamera
+Cfx.Cursor            = Cursor
+Cfx.GameCursor        = GameCursor
+Cfx.DrawSpriteMeter   = DrawSpriteMeter
+Cfx.DrawSpriteMeter3D = DrawSpriteMeter3D
 
 -- -- Registering actor entities.
-Cfx.Actor               = {}
-Cfx.Actor.Camera        = Camera
-Cfx.Actor.Blip          = Blip
-Cfx.Actor.Entity        = Entity
-Cfx.Actor.Particle      = Particle
-Cfx.Actor.Ped           = Ped
-Cfx.Actor.Prop          = Prop
-Cfx.Actor.Sound         = Sound
+Cfx.Actor             = {}
+Cfx.Actor.Camera      = Camera
+Cfx.Actor.Blip        = Blip
+Cfx.Actor.Entity      = Entity
+Cfx.Actor.Particle    = Particle
+Cfx.Actor.Ped         = Ped
+Cfx.Actor.Prop        = Prop
+Cfx.Actor.Sound       = Sound
 
--- Creating & Loading the texture(s)
-local txd               = CreateRuntimeTxd("aquiver_cfx")
-CreateRuntimeTextureFromImage(txd, "interaction_bg", "txd/interaction_bg.png")
+local Inventory       = require("client.inventories.inventory")
 
-local Inventory = require("client.inventories.inventory")
-
-CfxClient = {}
-CfxClient.Inventory = Inventory
+CfxClient             = {}
+CfxClient.Inventory   = Inventory

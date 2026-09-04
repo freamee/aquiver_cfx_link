@@ -253,7 +253,7 @@ end
 ---@param text? string
 ---@param interactionDistance? number
 function Graphics:drawInteractive2D(worldPosition, position, scale, cb, sprite, text, interactionDistance)
-    interactionDistance = interactionDistance or 3.0
+    interactionDistance = interactionDistance or 5.0
 
     local localPed = PlayerPedId()
     local localPosition = GetEntityCoords(localPed)

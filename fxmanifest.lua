@@ -10,22 +10,11 @@ provide {
 }
 
 client_scripts {
-    "links/inventories/ox_inventory/client.lua",
-    "links/inventories/quasar_inventory/client.lua",
-    "links/inventories/one_inventory/client.lua",
-
-    "client_exports.lua"
+    "main.lua"
 }
 
 server_scripts {
-    "links/frameworks/esx/server.lua",
-    "links/frameworks/qbcore/server.lua",
-    "links/frameworks/qbox/server.lua",
 
-    "links/inventories/ox_inventory/server.lua",
-    "links/inventories/quasar_inventory/server.lua",
-
-    "server/exports.lua"
 }
 
 shared_scripts {
@@ -34,6 +23,7 @@ shared_scripts {
 
 files {
     "txd/**",
+    "links/**",
     "client/**.lua",
     "shared/**.lua",
     "shared/**.lua"

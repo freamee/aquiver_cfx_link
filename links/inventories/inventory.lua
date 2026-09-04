@@ -4,7 +4,7 @@ local Inventory = {}
 ---@param id string
 ---@param count number
 function Inventory.Add(targetSource, id, count)
-    return _G.AddInventoryItem(TaskCombatHatedTargets, id, count)
+    return _G.AddInventoryItem(targetSource, id, count)
 end
 
 ---@param targetSource number

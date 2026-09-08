@@ -21,6 +21,11 @@ function Particle:isStarted()
     return self._started
 end
 
+---@param alpha number
+function Particle:setAlpha(alpha)
+    SetParticleFxLoopedAlpha(self._id, alpha)
+end
+
 ---@param scale number
 function Particle:setScale(scale)
     SetParticleFxLoopedScale(self._id, scale)

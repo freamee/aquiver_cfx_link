@@ -56,7 +56,7 @@ end
 
 ---@param alpha number
 function Actor:setAlpha(alpha)
-    SetEntityAlpha(self._entity, alpha, true)
+    SetEntityAlpha(self._entity, alpha, false)
 end
 
 function Actor:getFreezeState()

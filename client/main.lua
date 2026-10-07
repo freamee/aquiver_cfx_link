@@ -19,6 +19,8 @@ local Graphics          = require("client.Graphics")
 local DrawSpriteMeter   = require("client.DrawSpriteMeter")
 local DrawSpriteMeter3D = require("client.DrawSpriteMeter3D")
 
+local Proficiency       = require("client.resources.aqv_proficiency.Proficiency")
+
 require("links.inventories.one_inventory.client")
 require("links.inventories.ox_inventory.client")
 require("links.inventories.quasar_inventory.client")
@@ -51,3 +53,4 @@ local Inventory       = require("client.inventories.inventory")
 
 CfxClient             = {}
 CfxClient.Inventory   = Inventory
+CfxClient.Proficiency = Proficiency

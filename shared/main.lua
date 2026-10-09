@@ -3,6 +3,7 @@ local Tick = require("shared.Tick")
 local Log = require("shared.Log")
 local SmoothNumber = require("shared.SmoothNumber")
 local GetOffsetFromCoord = require("shared.GetOffsetFromCoord")
+local Transform = require("shared.Transform")
 
 CfxShared = {}
 
@@ -13,6 +14,7 @@ CfxShared.lerp = lerp
 CfxShared.Tick = Tick
 CfxShared.Log = Log
 CfxShared.SmoothNumber = SmoothNumber
+CfxShared.Transform = Transform
 
 CfxShared.isShowcaseServer = function()
     return GetConvarBool("aquiver_showcase_server", false)

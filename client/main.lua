@@ -18,6 +18,7 @@ local GameplayCamera    = require("client.GameplayCamera")
 local Graphics          = require("client.Graphics")
 local DrawSpriteMeter   = require("client.DrawSpriteMeter")
 local DrawSpriteMeter3D = require("client.DrawSpriteMeter3D")
+local Game              = require("client.Game")
 
 local Proficiency       = require("client.resources.aqv_proficiency.Proficiency")
 
@@ -38,6 +39,7 @@ Cfx.Cursor            = Cursor
 Cfx.GameCursor        = GameCursor
 Cfx.DrawSpriteMeter   = DrawSpriteMeter
 Cfx.DrawSpriteMeter3D = DrawSpriteMeter3D
+Cfx.Game              = Game
 
 -- -- Registering actor entities.
 Cfx.Actor             = {}

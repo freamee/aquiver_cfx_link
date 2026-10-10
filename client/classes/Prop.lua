@@ -56,6 +56,23 @@ function Prop:getTextureVariation()
     return GetObjectTextureVariation(self._entity)
 end
 
+---@param scale number
+function Prop:setScale(scale)
+    local forward, right, up, position = GetEntityMatrix(self._entity)
+
+    forward = forward * scale
+    right = right * scale
+    up = up * scale
+
+    SetEntityMatrix(
+        self._entity,
+        forward.x, forward.y, forward.z,
+        right.x, right.y, right.z,
+        up.x, up.y, up.z,
+        position.x, position.y, position.z
+    )
+end
+
 function Prop:isMoving()
     return self._moving
 end

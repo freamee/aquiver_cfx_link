@@ -1,7 +1,11 @@
 local Proficiency = {}
 
+function Proficiency:isResourceStarted()
+    return GetResourceState("aqv_proficiency") == "started"
+end
+
 function Proficiency:isReady()
-    return exports.aqv_proficiency:isReady()
+    return self:isResourceStarted() and exports.aqv_proficiency:isReady()
 end
 
 function Proficiency:getProficiencies()

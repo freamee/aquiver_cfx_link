@@ -7,6 +7,21 @@ Notification._tick = Tick:new(function()
     Notification:onTick()
 end, 0)
 
+---@param message string
+---@param duration number
+function Notification:pop(message, duration)
+    self._pops[NetworkGetNetworkIdFromEntity(PlayerPedId())] = {
+        netId = NetworkGetNetworkIdFromEntity(PlayerPedId()),
+        message = message,
+        duration = duration
+    }
+end
+
+---@param serialize IPopNotificationSerialize
+function Notification:addPop(serialize)
+    self._pops[serialize.netId] = serialize
+end
+
 function Notification:onTick()
     local sleep = 500
     local now = GetGameTimer()

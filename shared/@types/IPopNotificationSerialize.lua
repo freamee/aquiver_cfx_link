@@ -1,0 +1,4 @@
+---@class IPopNotificationSerialize
+---@field netId number
+---@field message string
+---@field duration number

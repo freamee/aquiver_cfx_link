@@ -60,3 +60,7 @@ local Inventory       = require("client.inventories.inventory")
 CfxClient             = {}
 CfxClient.Inventory   = Inventory
 CfxClient.Proficiency = Proficiency
+
+RegisterNetEvent("aquiver:notificationPop", function(...)
+    Cfx.Notification:addPop(...)
+end)

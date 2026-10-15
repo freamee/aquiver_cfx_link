@@ -6,11 +6,14 @@ local Notification = {}
 function Notification:pop(targetSource, message, duration)
     local netId = NetworkGetNetworkIdFromEntity(targetSource)
 
-    TriggerClientEvent("aquiver:notificationPop", -1, netId, message, duration)
-end
+    ---@type IPopNotificationSerialize
+    local serialize = {
+        netId = netId,
+        message = message,
+        duration = duration
+    }
 
--- function Notification:success(targetSource, message)
---     -- TriggerClientEvent("aquiver:no")
--- end
+    TriggerClientEvent("aquiver:notificationPop", -1, serialize)
+end
 
 return Notification

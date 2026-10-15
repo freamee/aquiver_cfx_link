@@ -8,6 +8,8 @@ local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
 local Attachment = require("server.attachment.AttachmentService")
 
+local Notification = require("server.notification.Notification")
+
 -- Loading link framework(s)
 require("links.frameworks.esx.server")
 require("links.frameworks.qbcore.server")
@@ -22,6 +24,7 @@ require("links.inventories.quasar_inventory.server")
 CfxServer = {}
 
 CfxServer.Attachment = Attachment
+CfxServer.Notify = Notification
 
 CfxServer.Actor = {}
 CfxServer.Actor.Vehicle = Vehicle

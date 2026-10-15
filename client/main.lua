@@ -20,6 +20,8 @@ local DrawSpriteMeter   = require("client.DrawSpriteMeter")
 local DrawSpriteMeter3D = require("client.DrawSpriteMeter3D")
 local Game              = require("client.Game")
 
+local Notification      = require("client.notification.Notification")
+
 local Proficiency       = require("client.resources.aqv_proficiency.Proficiency")
 
 require("links.inventories.one_inventory.client")
@@ -40,6 +42,8 @@ Cfx.GameCursor        = GameCursor
 Cfx.DrawSpriteMeter   = DrawSpriteMeter
 Cfx.DrawSpriteMeter3D = DrawSpriteMeter3D
 Cfx.Game              = Game
+
+Cfx.Notification      = Notification
 
 -- -- Registering actor entities.
 Cfx.Actor             = {}

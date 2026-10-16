@@ -2,3 +2,4 @@
 ---@field netId number
 ---@field message string
 ---@field duration number
+---@field position vector3

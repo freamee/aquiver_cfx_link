@@ -48,6 +48,10 @@ function Proficiency.GetAll()
     return exports.aqv_proficiency:getAll()
 end
 
+function Proficiency:IsReady()
+    return GetResourceState("aqv_proficiency") == "started"
+end
+
 ---@param targetSource number
 ---@param id string
 ---@param count number

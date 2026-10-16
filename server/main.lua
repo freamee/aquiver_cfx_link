@@ -8,7 +8,7 @@ local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
 local Attachment = require("server.attachment.AttachmentService")
 
-local Notification = require("server.notification.Notification")
+local Notification = require("server.notification.NotificationService")
 
 -- Loading link framework(s)
 require("links.frameworks.esx.server")

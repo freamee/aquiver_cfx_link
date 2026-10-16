@@ -1,9 +1,9 @@
-local Notification = {}
+local NotificationService = {}
 
 ---@param targetSource number
 ---@param message string
 ---@param duration number
-function Notification:pop(targetSource, message, duration)
+function NotificationService:pop(targetSource, message, duration)
     local netId = NetworkGetNetworkIdFromEntity(targetSource)
 
     ---@type IPopNotificationSerialize
@@ -16,4 +16,4 @@ function Notification:pop(targetSource, message, duration)
     TriggerClientEvent("aquiver:notificationPop", -1, serialize)
 end
 
-return Notification
+return NotificationService

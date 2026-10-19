@@ -9,14 +9,13 @@ local Vehicle = lib.class("S_Cfx_Vehicle", Entity)
 ---@param rotation vector3
 function Vehicle:constructor(modelHash, position, rotation)
     self:super(
-        CreateVehicle(
+        CreateVehicleServerSetter(
             modelHash,
+            "automobile",
             position.x,
             position.y,
             position.z,
-            0.0,
-            true,
-            true
+            rotation.z
         )
     )
 

@@ -13,6 +13,15 @@ function Actor:getScriptId()
     return self._entity
 end
 
+function Actor:getRoutingBucket()
+    return GetEntityRoutingBucket(self._entity)
+end
+
+---@param bucket number
+function Actor:setRoutingBucket(bucket)
+    SetEntityRoutingBucket(self._entity, bucket)
+end
+
 function Actor:getNetId()
     return NetworkGetNetworkIdFromEntity(self._entity)
 end

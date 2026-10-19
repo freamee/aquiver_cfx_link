@@ -22,4 +22,13 @@ function Vehicle:constructor(modelHash, position, rotation)
     self:setRotation(rotation)
 end
 
+---@param plateText string
+function Vehicle:setNumberPlateText(plateText)
+    SetVehicleNumberPlateText(self._entity, plateText)
+end
+
+function Vehicle:getNumberPlateText()
+    return GetVehicleNumberPlateText(self._entity)
+end
+
 return Vehicle

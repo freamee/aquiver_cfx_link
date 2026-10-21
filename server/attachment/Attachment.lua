@@ -6,6 +6,8 @@
 ---@field private _boneIndex number
 ---@field private _collision boolean
 ---@field private _children table<string, S_Cfx_Attachment>
+---@field private _particles table<string, S_AttachmentParticle>
+---@field private _sounds table<string, S_AttachmentSound>
 local Attachment = lib.class("S_Cfx_Attachment")
 
 ---@param id string
@@ -20,6 +22,8 @@ function Attachment:constructor(id, modelHash, offsetPosition, offsetRotation)
     self._boneIndex = -1
     self._collision = false
     self._children = {}
+    self._particles = {}
+    self._sounds = {}
 end
 
 function Attachment:getId()
@@ -62,6 +66,24 @@ function Attachment:setCollisionState(newState)
     self._collision = newState
 end
 
+---@param particle S_AttachmentParticle
+function Attachment:addParticle(particle)
+    self._particles[particle:getId()] = particle
+end
+
+function Attachment:removeParticle(id)
+    self._particles[id] = nil
+end
+
+---@param sound S_AttachmentSound
+function Attachment:addSound(sound)
+    self._sounds[sound:getId()] = sound
+end
+
+function Attachment:removeSound(id)
+    self._sounds[id] = nil
+end
+
 ---@param attachment S_Cfx_Attachment
 function Attachment:addChild(attachment)
     self._children[attachment:getId()] = attachment
@@ -79,12 +101,21 @@ function Attachment:removeChild(id)
     self._children[id] = nil
 end
 
----@return IAttachment
 function Attachment:serialize()
     local childrenSerialized = {}
+    local particleSerialized = {}
+    local soundSerialized = {}
 
     for id, children in pairs(self._children) do
         childrenSerialized[children:getId()] = children:serialize()
+    end
+
+    for k, v in pairs(self._particles) do
+        particleSerialized[#particleSerialized + 1] = v:serialize()
+    end
+
+    for k, v in pairs(self._sounds) do
+        soundSerialized[#soundSerialized + 1] = v:serialize()
     end
 
     return {
@@ -94,7 +125,9 @@ function Attachment:serialize()
         offsetRotation = self._offsetRotation,
         boneIndex = self._boneIndex,
         collision = self._collision,
-        children = childrenSerialized
+        children = childrenSerialized,
+        particles = particleSerialized,
+        sounds = soundSerialized
     }
 end
 

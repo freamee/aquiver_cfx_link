@@ -8,6 +8,8 @@ local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
 local Attachment = require("server.attachment.AttachmentService")
 
+local SoundService = require("server.SoundService")
+
 local Notification = require("server.notification.NotificationService")
 
 -- Loading link framework(s)
@@ -31,6 +33,8 @@ CfxServer.Actor.Vehicle = Vehicle
 CfxServer.Actor.Entity = Actor
 CfxServer.Actor.Prop = Prop
 CfxServer.Actor.Ped = Ped
+
+CfxServer.Sound = SoundService
 
 CfxServer.RemoveCash = function(targetSource, count)
     return _G.RemoveCash(targetSource, count)

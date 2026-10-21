@@ -24,6 +24,9 @@ local Notification      = require("client.notification.Notification")
 
 local Proficiency       = require("client.resources.aqv_proficiency.Proficiency")
 
+local SoundService      = require("client.SoundService")
+local AttachmentService = require("client.attachment.AttachmentService")
+
 require("links.inventories.one_inventory.client")
 require("links.inventories.ox_inventory.client")
 require("links.inventories.quasar_inventory.client")
@@ -42,6 +45,8 @@ Cfx.GameCursor        = GameCursor
 Cfx.DrawSpriteMeter   = DrawSpriteMeter
 Cfx.DrawSpriteMeter3D = DrawSpriteMeter3D
 Cfx.Game              = Game
+
+Cfx.Sound             = SoundService
 
 Cfx.Notification      = Notification
 
@@ -63,4 +68,10 @@ CfxClient.Proficiency = Proficiency
 
 RegisterNetEvent("aquiver:notificationPop", function(...)
     Cfx.Notification:addPop(...)
+end)
+RegisterNetEvent("SoundService::PlayAt", function(...)
+    Cfx.Sound:playAt(...)
+end)
+RegisterNetEvent("aqv::attachments::sync", function(...)
+    AttachmentService:sync(...)
 end)

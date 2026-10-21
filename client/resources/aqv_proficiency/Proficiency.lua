@@ -4,26 +4,17 @@ function Proficiency:isResourceStarted()
     return GetResourceState("aqv_proficiency") == "started"
 end
 
-function Proficiency:isReady()
-    return self:isResourceStarted() and exports.aqv_proficiency:isReady()
-end
-
-function Proficiency:getProficiencies()
-    return exports.aqv_proficiency:getProficiencies()
+function Proficiency:IsReady()
+    return self:isResourceStarted()
 end
 
 ---@param id string
-function Proficiency:getProficiency(id)
-    return exports.aqv_proficiency:getProficiency(id)
+function Proficiency:Serialize(id)
+    return exports.oxmysql:serialize(id)
 end
 
----@param id string
-function Proficiency:getPoint(id)
-    return exports.aqv_proficiency:getPoint(id)
-end
-
-function Proficiency:getPlayerProficiencies()
-    return exports.aqv_proficiency:getPlayerProficiencies()
+function Proficiency:SerializeAll()
+    return exports.aqv_proficiency:serializeAll()
 end
 
 return Proficiency

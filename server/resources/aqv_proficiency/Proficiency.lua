@@ -20,6 +20,7 @@
 ---@field description string
 ---@field icon string
 ---@field pointCap number
+---@field baseXp number
 ---@field multiplier number
 ---@field resource string
 ---@field milestones IProficiencyMilestone[]

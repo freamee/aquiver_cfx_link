@@ -1,8 +1,20 @@
 local Attachment = require("server.attachment.Attachment")
+local AttachmentParticle = require("server.attachment.AttachmentParticle")
+local AttachmentSound = require("server.attachment.AttachmentSound")
 
 local AttachmentService = {}
 ---@type table<number, table<string, S_Cfx_Attachment>>
 AttachmentService._players = {}
+
+AttachmentService.Attachment = Attachment
+AttachmentService.AttachmentSound = AttachmentSound
+AttachmentService.AttachmentParticle = AttachmentParticle
+
+function AttachmentService:add(playerSource)
+    -- Attachment:new
+    -- AttachmentSound:new()
+    -- AttachmentParticle:new()
+end
 
 ---@param playerSource number
 ---@param id string
@@ -20,42 +32,22 @@ function AttachmentService:create(playerSource, id, modelHash, offsetPosition, o
     self._players[playerSource] = self._players[playerSource] or {}
     self._players[playerSource][id] = attachment
 
-    self:sync(playerSource, attachment)
+    self:sync(playerSource)
 
     return attachment
 end
 
 ---@param playerSource number
----@param id string
----@param offsetPosition vector3
----@param offsetRotation vector3
----@param boneIndex any
----@param collision any
-function AttachmentService:update(playerSource, id, offsetPosition, offsetRotation, boneIndex, collision)
-    local entities = self._players[playerSource]
-    if not entities then return false end
+function AttachmentService:sync(playerSource)
+    local serialized = {}
 
-    local attachment = entities[id]
-    if not attachment then return false end
+    for k, v in pairs(self._players[playerSource] or {}) do
+        serialized[#serialized + 1] = v:serialize()
+    end
 
-    attachment:setOffsetPosition(offsetPosition)
-    attachment:setOffsetRotation(offsetRotation)
-    attachment:setBoneIndex(boneIndex)
-    attachment:setCollisionState(collision)
+    TriggerClientEvent("aqv::attachments::sync", playerSource, serialized)
 
-    self:sync(playerSource, attachment)
-
-    return true
-end
-
----@param playerSource number
----@param attachment S_Cfx_Attachment
-function AttachmentService:sync(playerSource, attachment)
-    TriggerClientEvent(
-        "AttachmentService::Create",
-        playerSource,
-        attachment:serialize()
-    )
+    -- Player(playerSource).state:set("atts", serialized, true)
 end
 
 ---@param playerSource number
@@ -73,7 +65,7 @@ function AttachmentService:remove(playerSource, id)
 
     entities[id] = nil
 
-    TriggerClientEvent("AttachmentService::Remove", playerSource, id)
+    self:sync(playerSource)
 
     return true
 end

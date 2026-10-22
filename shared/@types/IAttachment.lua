@@ -1,0 +1,16 @@
+---@class IAttachment
+---@field id string
+---@field modelHash string
+---@field offsetPosition vector3
+---@field offsetRotation vector3
+---@field boneIndex number
+---@field collision boolean
+---@field particles IAttachmentPtfx[]
+
+---@class IAttachmentPtfx
+---@field id string
+---@field dictionary string
+---@field name string
+---@field position vector3
+---@field rotation vector3
+---@field scale number

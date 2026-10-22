@@ -65,3 +65,17 @@ end
 
 CfxServer.Inventory = Inventory
 CfxServer.Proficiency = Proficiency
+
+
+RegisterNetEvent("aqv:sound:playNet", function(position, range, audioName, audioRef)
+    local playerSource = source
+    local dimension = GetPlayerRoutingBucket(playerSource)
+
+    CfxServer.Sound:playAt(
+        position,
+        dimension,
+        range,
+        audioName,
+        audioRef
+    )
+end)

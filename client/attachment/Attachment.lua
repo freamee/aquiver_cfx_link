@@ -35,6 +35,24 @@ function Attachment:getEntity()
     return self._entity
 end
 
+function Attachment:getModelHash()
+    return self._modelHash
+end
+
+---@param modelHash string
+function Attachment:setModelHash(modelHash)
+    self._modelHash = modelHash
+end
+
+function Attachment:getCollisionState()
+    return self._collision
+end
+
+---@param newState boolean
+function Attachment:setCollisionState(newState)
+    self._collision = newState
+end
+
 ---@param offsetPosition vector3
 function Attachment:setOffsetPosition(offsetPosition)
     self._offsetPosition = offsetPosition
@@ -55,12 +73,17 @@ function Attachment:setBoneIndex(boneIndex)
 end
 
 ---@param particle C_AttachmentParticle
-function Attachment:addParticle(particle)
+function Attachment:addPtfx(particle)
     self._particles[particle:getId()] = particle
 end
 
-function Attachment:removeParticle(id)
+function Attachment:removePtfx(id)
     self._particles[id] = nil
+end
+
+---@param id string
+function Attachment:getPtfx(id)
+    return self._particles[id]
 end
 
 ---@param sound C_AttachmentSound
@@ -72,8 +95,29 @@ function Attachment:removeSound(id)
     self._sounds[id] = nil
 end
 
-function Attachment:destroy()
+---@param ped number
+function Attachment:sync(ped)
+    AttachEntityToEntity(
+        self._entity:getScriptId(),
+        ped,
+        self._boneIndex,
+        self._offsetPosition.x,
+        self._offsetPosition.y,
+        self._offsetPosition.z,
+        self._offsetRotation.x,
+        self._offsetRotation.y,
+        self._offsetRotation.z,
+        false,
+        false,
+        self._collision,
+        false,
+        2,
+        true
+    )
+end
 
+function Attachment:destroy()
+    self._entity:destroy()
 end
 
 return Attachment

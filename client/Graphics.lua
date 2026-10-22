@@ -1,3 +1,5 @@
+local Color = require("shared.Color")
+
 local Graphics = {}
 
 ---@param position vector2
@@ -6,13 +8,17 @@ local Graphics = {}
 ---@param center boolean
 ---@param color? [number, number, number, number]
 function Graphics:drawTextThisFrame2D(position, text, scale, center, color)
-    color = color and color or { 255, 255, 255, 255 }
-
-    local r, g, b, a = table.unpack(color)
+    -- color = color and color or { 255, 255, 255, 255 }
+    color = Color:new(255, 255, 255, 255)
 
     SetTextScale(0.0, scale)
     SetTextProportional(true)
-    SetTextColour(r, g, b, a)
+    SetTextColour(
+        color:getR(),
+        color:getG(),
+        color:getB(),
+        color:getA()
+    )
     SetTextCentre(center)
 
     SetTextOutline()
@@ -29,13 +35,17 @@ end
 ---@param center boolean
 ---@param color? [number, number, number, number]
 function Graphics:drawTextThisFrame3D(position, text, scale, center, color)
-    color = color and color or { 255, 255, 255, 255 }
-
-    local r, g, b, a = table.unpack(color)
+    -- color = color and color or { 255, 255, 255, 255 }
+    color = Color:new(255, 255, 255, 255)
 
     SetTextScale(0.0, scale)
     SetTextProportional(true)
-    SetTextColour(r, g, b, a)
+    SetTextColour(
+        color:getR(),
+        color:getG(),
+        color:getB(),
+        color:getA()
+    )
     SetTextCentre(center)
 
     SetTextOutline()

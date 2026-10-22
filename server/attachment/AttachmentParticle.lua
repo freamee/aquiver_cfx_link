@@ -56,7 +56,8 @@ function AttachmentParticle:serialize()
         dictionary = self._dictionary,
         name = self._name,
         position = self._position,
-        rotation = self._rotation
+        rotation = self._rotation,
+        scale = self._scale
     }
 end
 

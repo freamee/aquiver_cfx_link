@@ -1,5 +1,6 @@
 local GameCursor = {}
 GameCursor._currentState = false
+
 function GameCursor:set(newState)
     if self._currentState == newState then return end
 

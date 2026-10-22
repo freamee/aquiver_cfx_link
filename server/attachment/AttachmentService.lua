@@ -45,7 +45,7 @@ function AttachmentService:sync(playerSource)
         serialized[#serialized + 1] = v:serialize()
     end
 
-    TriggerClientEvent("aqv::attachments::sync", playerSource, serialized)
+    TriggerClientEvent("aqv::attachments::sync", -1, playerSource, serialized)
 
     -- Player(playerSource).state:set("atts", serialized, true)
 end

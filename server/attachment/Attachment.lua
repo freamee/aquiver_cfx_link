@@ -101,6 +101,7 @@ function Attachment:removeChild(id)
     self._children[id] = nil
 end
 
+---@return IAttachment
 function Attachment:serialize()
     local childrenSerialized = {}
     local particleSerialized = {}

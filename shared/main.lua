@@ -5,6 +5,7 @@ local SmoothNumber = require("shared.SmoothNumber")
 local GetOffsetFromCoord = require("shared.GetOffsetFromCoord")
 local Transform = require("shared.Transform")
 local Color = require("shared.Color")
+local Sequence = require("shared.Sequence")
 
 CfxShared = {}
 
@@ -17,6 +18,7 @@ CfxShared.Log = Log
 CfxShared.SmoothNumber = SmoothNumber
 CfxShared.Transform = Transform
 CfxShared.Color = Color
+CfxShared.Sequence = Sequence
 
 CfxShared.isShowcaseServer = function()
     return GetConvarBool("aquiver_showcase_server", false)

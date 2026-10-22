@@ -1,4 +1,5 @@
 local Prop = require("client.classes.Prop")
+local AttachmentParticle = require("client.attachment.AttachmentParticle")
 
 ---@class C_Attachment : OxClass
 ---@field private _id string
@@ -95,6 +96,40 @@ function Attachment:removeSound(id)
     self._sounds[id] = nil
 end
 
+---@param data IAttachmentPtfx[]
+function Attachment:syncPtfx(data)
+    local received = {}
+
+    for _, ctx in ipairs(data or {}) do
+        received[ctx.id] = true
+
+        local particle = self._particles[ctx.id]
+
+        if not particle then
+            particle = AttachmentParticle:new(
+                ctx.id,
+                ctx.dictionary,
+                ctx.name
+            )
+
+            self._particles[ctx.id] = particle
+        end
+
+        particle:setPosition(ctx.position)
+        particle:setRotation(ctx.rotation)
+        particle:setScale(ctx.scale)
+
+        particle:start(self)
+    end
+
+    for id, particle in pairs(self._particles) do
+        if not received[id] then
+            particle:destroy()
+            self._particles[id] = nil
+        end
+    end
+end
+
 ---@param ped number
 function Attachment:sync(ped)
     AttachEntityToEntity(
@@ -117,6 +152,14 @@ function Attachment:sync(ped)
 end
 
 function Attachment:destroy()
+    for id, ptfx in pairs(self._particles) do
+        ptfx:destroy()
+    end
+
+    for id, sfx in pairs(self._sounds) do
+        sfx:destroy()
+    end
+
     self._entity:destroy()
 end
 

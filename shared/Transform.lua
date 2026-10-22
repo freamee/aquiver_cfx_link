@@ -10,4 +10,12 @@ function Transform:constructor(position, rotation)
     self.rotation = rotation or vector3(0, 0, 0)
 end
 
+---@param entity number
+function Transform.FromEntity(entity)
+    return Transform:new(
+        GetEntityCoords(entity),
+        GetEntityRotation(entity)
+    )
+end
+
 return Transform

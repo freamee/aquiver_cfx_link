@@ -37,26 +37,27 @@ function AttachmentService:sync(targetSource, data)
     entity:setBoneIndex(data.boneIndex)
 
     entity:sync(targetPed)
+    entity:syncPtfx(data.particles)
 
-    for _, ctx in pairs(data.particles) do
-        local ptfx = entity:getPtfx(ctx.id)
+    -- for _, ctx in pairs(data.particles) do
+    --     local ptfx = entity:getPtfx(ctx.id)
 
-        if not ptfx then
-            ptfx = AttachmentParticle:new(
-                ctx.id,
-                ctx.dictionary,
-                ctx.name
-            )
-        end
+    --     if not ptfx then
+    --         ptfx = AttachmentParticle:new(
+    --             ctx.id,
+    --             ctx.dictionary,
+    --             ctx.name
+    --         )
+    --     end
 
-        ptfx:setPosition(ctx.position)
-        ptfx:setRotation(ctx.rotation)
-        ptfx:setScale(ctx.scale)
+    --     ptfx:setPosition(ctx.position)
+    --     ptfx:setRotation(ctx.rotation)
+    --     ptfx:setScale(ctx.scale)
 
-        ptfx:start(entity)
+    --     ptfx:start(entity)
 
-        entity:addPtfx(ptfx)
-    end
+    --     entity:addPtfx(ptfx)
+    -- end
 
     entities[targetPed][data.id] = entity
 end

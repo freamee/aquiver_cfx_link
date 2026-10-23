@@ -27,6 +27,9 @@ local Proficiency       = require("client.resources.aqv_proficiency.Proficiency"
 local SoundService      = require("client.SoundService")
 local AttachmentService = require("client.attachment.AttachmentService")
 
+local Animation         = require("client.animation.animation")
+local AnimationSequence = require("client.animation.animation_sequence")
+
 require("links.inventories.one_inventory.client")
 require("links.inventories.ox_inventory.client")
 require("links.inventories.quasar_inventory.client")
@@ -45,6 +48,9 @@ Cfx.GameCursor        = GameCursor
 Cfx.DrawSpriteMeter   = DrawSpriteMeter
 Cfx.DrawSpriteMeter3D = DrawSpriteMeter3D
 Cfx.Game              = Game
+
+Cfx.Animation         = Animation
+Cfx.AnimationSequence = AnimationSequence
 
 Cfx.Sound             = SoundService
 

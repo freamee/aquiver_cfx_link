@@ -7,6 +7,7 @@
 ---@field private _duration number
 ---@field private _flag number
 ---@field private _playbackRate number
+---@field private _waitForFinish boolean
 local Animation = lib.class("C_Animation")
 
 ---@param id string
@@ -22,6 +23,8 @@ function Animation:constructor(id, dictionary, name)
     self._duration = -1
     self._flag = 1
     self._playbackRate = 1.0
+
+    self._waitForFinish = false
 end
 
 function Animation:getId()
@@ -36,9 +39,22 @@ function Animation:getName()
     return self._name
 end
 
+---@param newState boolean
+function Animation:setWaitForFinish(newState)
+    self._waitForFinish = newState
+
+    return self
+end
+
+function Animation:getWaitForFinish()
+    return self._waitForFinish
+end
+
 ---@param duration number
 function Animation:setDuration(duration)
     self._duration = duration
+
+    return self
 end
 
 function Animation:getDuration()
@@ -48,6 +64,8 @@ end
 ---@param flag number
 function Animation:setFlag(flag)
     self._flag = flag
+
+    return self
 end
 
 function Animation:getFlag()
@@ -57,6 +75,8 @@ end
 ---@param speed number
 function Animation:setPlaybackRate(speed)
     self._playbackRate = speed
+
+    return self
 end
 
 function Animation:getPlaybackRate()
@@ -80,6 +100,8 @@ end
 function Animation:setBlendSpeed(blendIn, blendOut)
     self._blendInSpeed = blendIn
     self._blendOutSpeed = blendOut
+
+    return self
 end
 
 ---@param ped number

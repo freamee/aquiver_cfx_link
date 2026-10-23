@@ -61,19 +61,11 @@ function AnimationSequence:play(ped, onComplete)
                 false
             )
 
-            -- if animation:shouldWaitForEnd() then
-            --     while self._playing
-            --         and DoesEntityExist(ped)
-            --         and IsEntityPlayingAnim(
-            --             ped,
-            --             dict,
-            --             animation:getName(),
-            --             3
-            --         )
-            --     do
-            --         Wait(0)
-            --     end
-            -- end
+            if animation:getWaitForFinish() then
+                while self._playing and DoesEntityExist(ped) and IsEntityPlayingAnim(ped, dict, animation:getName(), 3) do
+                    Citizen.Wait(0)
+                end
+            end
         end
 
         local completed = self._playing

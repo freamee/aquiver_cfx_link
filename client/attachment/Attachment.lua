@@ -1,5 +1,5 @@
 local Prop = require("client.classes.Prop")
-local AttachmentParticle = require("client.attachment.AttachmentParticle")
+local AttachmentParticle = require("client.attachment.attachment_particle")
 
 ---@class C_Attachment : OxClass
 ---@field private _id string

@@ -1,6 +1,6 @@
-local Attachment = require("server.attachment.Attachment")
-local AttachmentParticle = require("server.attachment.AttachmentParticle")
-local AttachmentSound = require("server.attachment.AttachmentSound")
+local Attachment = require("server.attachment.attachment")
+local AttachmentParticle = require("server.attachment.attachment_particle")
+local AttachmentSound = require("server.attachment.attachment_sound")
 
 local AttachmentService = {}
 ---@type table<number, table<string, S_Cfx_Attachment>>
@@ -10,10 +10,12 @@ AttachmentService.Attachment = Attachment
 AttachmentService.AttachmentSound = AttachmentSound
 AttachmentService.AttachmentParticle = AttachmentParticle
 
-function AttachmentService:add(playerSource)
-    -- Attachment:new
-    -- AttachmentSound:new()
-    -- AttachmentParticle:new()
+---@param attachment S_Cfx_Attachment
+function AttachmentService:add(playerSource, attachment)
+    self._players[playerSource] = self._players[playerSource] or {}
+    self._players[playerSource][attachment:getId()] = attachment
+
+    self:sync(playerSource)
 end
 
 ---@param playerSource number

@@ -5,7 +5,7 @@ local SmoothNumber = require("shared.SmoothNumber")
 local GetOffsetFromCoord = require("shared.GetOffsetFromCoord")
 local Transform = require("shared.Transform")
 local Color = require("shared.Color")
-local Sequence = require("shared.Sequence")
+local Sequence = require("shared.timing.sequence")
 
 CfxShared = {}
 

@@ -1,5 +1,5 @@
-local Attachment = require("client.attachment.Attachment")
-local AttachmentParticle = require("client.attachment.AttachmentParticle")
+local Attachment = require("client.attachment.attachment")
+local AttachmentParticle = require("client.attachment.attachment_particle")
 
 local AttachmentService = {}
 ---@type table<number, table<string, C_Attachment>>

@@ -31,7 +31,7 @@ function SoundService:playAtNet(position, range, audioName, audioRef)
     TriggerServerEvent("aqv:sound:playNet", position, range, audioName, audioRef)
 end
 
-RegisterNetEvent("SoundService::PlayAt", function(...)
+RegisterNetEvent("aqv:sound:playAt", function(...)
     SoundService:playAt(...)
 end)
 

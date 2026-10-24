@@ -14,7 +14,7 @@ function SoundService:playAt(position, dimension, range, audioName, audioRef)
         if GetPlayerRoutingBucket(targetSource) ~= dimension then return end
 
         TriggerClientEvent(
-            "SoundService::PlayAt",
+            "aqv:sound:playAt",
             targetSource,
             position,
             range,

@@ -15,6 +15,12 @@ local SoundService = require("server.SoundService")
 
 local Notification = require("server.notification.NotificationService")
 
+local NetEntity = require("server.classes.NetEntity")
+local NetPed = require("server.classes.NetPed")
+local NetPlayer = require("server.classes.NetPlayer")
+local NetProp = require("server.classes.NetProp")
+local NetVehicle = require("server.classes.NetVehicle")
+
 -- Loading link framework(s)
 require("links.frameworks.esx.server")
 require("links.frameworks.qbcore.server")
@@ -39,6 +45,14 @@ CfxServer.Actor.Vehicle = Vehicle
 CfxServer.Actor.Entity = Actor
 CfxServer.Actor.Prop = Prop
 CfxServer.Actor.Ped = Ped
+
+CfxServer.Net = {
+    Entity = NetEntity,
+    Ped = NetPed,
+    Player = NetPlayer,
+    Prop = NetProp,
+    Vehicle = NetVehicle
+}
 
 CfxServer.Sound = SoundService
 

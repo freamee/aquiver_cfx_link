@@ -8,6 +8,7 @@
 ---@field private _flag number
 ---@field private _playbackRate number
 ---@field private _waitForFinish boolean
+---@field private _startAt number 0.0 - 1.0
 local Animation = lib.class("C_Animation")
 
 ---@param id string
@@ -25,6 +26,7 @@ function Animation:constructor(id, dictionary, name)
     self._playbackRate = 1.0
 
     self._waitForFinish = false
+    self._startAt = 0.0
 end
 
 function Animation:getId()
@@ -37,6 +39,15 @@ end
 
 function Animation:getName()
     return self._name
+end
+
+---@param startAt number
+function Animation:setStartAt(startAt)
+    self._startAt = startAt
+end
+
+function Animation:getStartAt()
+    return self._startAt
 end
 
 ---@param newState boolean
@@ -120,6 +131,17 @@ function Animation:play(ped)
         false,
         false,
         false
+    )
+
+    while not IsEntityPlayingAnim(ped, self._dictionary, self._name, 3) do
+        Citizen.Wait(0)
+    end
+
+    SetEntityAnimCurrentTime(
+        ped,
+        self._dictionary,
+        self._name,
+        self._startAt
     )
 end
 

@@ -10,7 +10,7 @@ end
 
 ---@param playerSource number
 function NetPlayer:constructor(playerSource)
-    self._playerSource = source
+    self._playerSource = playerSource
     self._state = Player(playerSource).state
 end
 

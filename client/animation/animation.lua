@@ -23,7 +23,7 @@ function Animation:constructor(id, dictionary, name)
     self._blendOutSpeed = -8.0
     self._duration = -1
     self._flag = 1
-    self._playbackRate = 1.0
+    self._playbackRate = 0.0
 
     self._waitForFinish = false
     self._startAt = 0.0

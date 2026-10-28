@@ -39,21 +39,21 @@ function NetEntity:getRotation()
 end
 
 ---@param rotation vector3
-function NetPlayer:setRotation(rotation)
+function NetEntity:setRotation(rotation)
     SetEntityRotation(self._entity, rotation.x, rotation.y, rotation.z, 2, false)
 end
 
-function NetPlayer:getPosition()
+function NetEntity:getPosition()
     return GetEntityCoords(self._entity)
 end
 
 ---@param position vector3
-function NetPlayer:setPosition(position)
+function NetEntity:setPosition(position)
     SetEntityCoords(self._entity, position.x, position.y, position.z, false, false, false, false)
 end
 
 ---@param position vector3
-function NetPlayer:setPositionNoOffset(position)
+function NetEntity:setPositionNoOffset(position)
     SetEntityCoordsNoOffset(
         self._entity,
         position.x,

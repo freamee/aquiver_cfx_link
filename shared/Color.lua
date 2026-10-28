@@ -47,6 +47,15 @@ function Color:getA()
 end
 
 ---@param r number
+---@param g number
+---@param b number
+function Color:set(r, g, b)
+    self:setR(r)
+    self:setG(g)
+    self:setB(b)
+end
+
+---@param r number
 function Color:setR(r)
     self._r = validateChannel(r)
 end

@@ -10,14 +10,18 @@ provide {
 }
 
 client_scripts {
-    "main.lua"
+    "main.lua",
+
+    "runtime/client/main.lua"
 }
 
 server_scripts {
+    "main.lua",
 
+    "runtime/server/main.lua"
 }
 
-shared_scripts {
+red_scripts {
     '@ox_lib/init.lua',
 }
 

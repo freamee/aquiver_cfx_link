@@ -6,11 +6,6 @@ local Ped = require("server.classes.Ped")
 local Inventory = require("links.inventories.inventory")
 local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
-local Attachment = require("server.attachment.attachment")
-local AttachmentSound = require("server.attachment.attachment_sound")
-local AttachmentParticle = require("server.attachment.attachment_particle")
-local AttachmentService = require("server.attachment.attachment_service")
-
 local SoundService = require("server.SoundService")
 
 local Notification = require("server.notification.NotificationService")
@@ -34,10 +29,6 @@ require("links.inventories.quasar_inventory.server")
 
 CfxServer = {}
 
-CfxServer.Attachment = Attachment
-CfxServer.AttachmentParticle = AttachmentParticle
-CfxServer.AttachmentSound = AttachmentSound
-CfxServer.AttachmentService = AttachmentService
 CfxServer.Notify = Notification
 
 CfxServer.Actor = {}

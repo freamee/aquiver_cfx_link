@@ -9,20 +9,19 @@ provide {
     'aquiver'
 }
 
+shared_scripts {
+    '@ox_lib/init.lua',
+}
+
+dependency 'ox_lib'
+
 client_scripts {
     "main.lua",
-
     "runtime/client/main.lua"
 }
 
 server_scripts {
-    "main.lua",
-
     "runtime/server/main.lua"
-}
-
-red_scripts {
-    '@ox_lib/init.lua',
 }
 
 files {
@@ -30,5 +29,5 @@ files {
     "links/**",
     "client/**.lua",
     "shared/**.lua",
-    "shared/**.lua"
+    "runtime/client/*.lua"
 }

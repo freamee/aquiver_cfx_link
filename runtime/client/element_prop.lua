@@ -1,4 +1,4 @@
-local Element = require("lua.client.Element")
+local Element = require("runtime.client.element")
 
 ---@class C_ElementProp : C_Element
 ---@field private _modelHash string|number
@@ -86,8 +86,9 @@ end
 ---@param position vector3
 ---@param rotation vector3
 ---@param boneIndex? number Ped bone ID when attaching to a ped.
+---@param collision? boolean
 ---@return boolean
-function ElementProp:attach(to, position, rotation, boneIndex)
+function ElementProp:attach(to, position, rotation, boneIndex, collision)
     if self:isDestroyed() then
         return false
     end
@@ -100,6 +101,8 @@ function ElementProp:attach(to, position, rotation, boneIndex)
         return false
     end
 
+    position = position or vector3(0, 0, 0)
+    rotation = rotation or vector3(0, 0, 0)
     boneIndex = boneIndex or -1
     if IsEntityAPed(to) and boneIndex ~= -1 then
         boneIndex = GetPedBoneIndex(to, boneIndex)
@@ -117,7 +120,7 @@ function ElementProp:attach(to, position, rotation, boneIndex)
         rotation.z,
         false,
         false,
-        false,
+        collision or false,
         false,
         1,
         true

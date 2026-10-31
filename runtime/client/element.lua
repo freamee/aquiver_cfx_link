@@ -1,4 +1,4 @@
-local Registry = require("lua.client.ElementRegistry")
+local Registry = require("runtime.client.element_registry")
 
 ---@class C_Element : OxClass
 ---@field private _id string

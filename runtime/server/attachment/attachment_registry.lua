@@ -7,6 +7,7 @@ AttachmentRegistry._attachments = {}
 ---@param targetSource number
 ---@param id string
 function AttachmentRegistry:get(targetSource, id)
+    targetSource = tonumber(targetSource)
     local entities = self._attachments[targetSource]
 
     if entities then
@@ -17,6 +18,7 @@ end
 ---@param targetSource number
 ---@param attachment S_ElementProp
 function AttachmentRegistry:publish(targetSource, attachment)
+    targetSource = tonumber(targetSource)
     local id = attachment:getId()
     local previous = self:get(targetSource, id)
 
@@ -44,6 +46,7 @@ end
 ---@param targetSource number
 ---@param attachment S_ElementProp
 function AttachmentRegistry:remove(targetSource, attachment)
+    targetSource = tonumber(targetSource)
     local id = attachment:getId()
 
     if self:get(targetSource, id) ~= attachment then
@@ -87,13 +90,19 @@ end
 
 ---@param targetSource number
 function AttachmentRegistry:onPlayerQuit(targetSource)
+    targetSource = tonumber(targetSource)
     local entities = self._attachments[targetSource]
 
     if not entities then
         return
     end
 
+    local attachments = {}
     for _, attachment in pairs(entities) do
+        attachments[#attachments + 1] = attachment
+    end
+
+    for _, attachment in ipairs(attachments) do
         attachment:destroy()
     end
 end
@@ -101,13 +110,18 @@ end
 ---@param resourceName string
 function AttachmentRegistry:onResourceStop(resourceName)
     local stoppingThisResource = resourceName == GetCurrentResourceName()
+    local attachments = {}
 
     for _, entities in pairs(self._attachments) do
         for _, attachment in pairs(entities) do
             if stoppingThisResource or attachment:getOwnerResource() == resourceName then
-                attachment:destroy()
+                attachments[#attachments + 1] = attachment
             end
         end
+    end
+
+    for _, attachment in ipairs(attachments) do
+        attachment:destroy()
     end
 end
 

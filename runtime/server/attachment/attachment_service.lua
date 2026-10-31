@@ -8,7 +8,7 @@ local AttachmentService = {}
 ---@param targetSource number
 ---@param id string
 ---@param definition table
----@param ownerResource string
+---@param ownerResource? string
 function AttachmentService:create(targetSource, id, definition, ownerResource)
     local attachment = ElementProp:new(
         id,
@@ -16,24 +16,26 @@ function AttachmentService:create(targetSource, id, definition, ownerResource)
         ownerResource
     )
 
+    attachment:setCollisionState(definition.collision or false)
+
     for effectId, effect in pairs(definition.particles or {}) do
         local particle = ElementParticle:new(
-            effectId,
+            effect.id or effectId,
             effect.dictionary,
             effect.name
         )
 
         attachment:addParticle(
             particle,
-            effect.position,
-            effect.rotation,
+            effect.position or effect.offsetPosition,
+            effect.rotation or effect.offsetRotation,
             effect.scale
         )
     end
 
     for effectId, effect in pairs(definition.sounds or {}) do
         local sound = ElementSound:new(
-            effect.id,
+            effect.id or effectId,
             effect.audioName,
             effect.audioRef
         )
@@ -43,12 +45,13 @@ function AttachmentService:create(targetSource, id, definition, ownerResource)
 
     local attached = attachment:attach(
         targetSource,
-        definition.position,
-        definition.rotation,
+        definition.position or definition.offsetPosition,
+        definition.rotation or definition.offsetRotation,
         definition.boneIndex
     )
 
     if not attached then
+        attachment:destroy()
         return nil
     end
 
@@ -96,7 +99,7 @@ end
 
 ---@param targetSource number
 ---@param id string
----@param soundId number
+---@param soundId string
 ---@param audioName string
 ---@param audioRef string
 function AttachmentService:addSound(targetSource, id, soundId, audioName, audioRef)
@@ -108,7 +111,12 @@ function AttachmentService:addSound(targetSource, id, soundId, audioName, audioR
 
     local sound = ElementSound:new(soundId, audioName, audioRef)
 
-    return attachment:addSound(sound) ~= false
+    if not attachment:addSound(sound) then
+        sound:destroy()
+        return false
+    end
+
+    return true
 end
 
 ---@param targetSource number
@@ -141,7 +149,12 @@ function AttachmentService:addParticle(targetSource, id, particleId, dictionary,
 
     local particle = ElementParticle:new(particleId, dictionary, name)
 
-    return attachment:addParticle(particle, position, rotation, scale) ~= false
+    if not attachment:addParticle(particle, position, rotation, scale) then
+        particle:destroy()
+        return false
+    end
+
+    return true
 end
 
 ---@param targetSource number
@@ -176,10 +189,7 @@ function AttachmentService:setParticleOffset(targetSource, id, particleId, posit
         return false
     end
 
-    particle:setOffset(position, rotation, scale)
-    attachment:update()
-
-    return true
+    return particle:setOffset(position, rotation, scale)
 end
 
 return AttachmentService

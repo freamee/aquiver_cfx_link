@@ -1,4 +1,4 @@
-local Element = require("lua.client.Element")
+local Element = require("runtime.client.element")
 
 ---@class C_ElementSound : C_Element
 ---@field private _audioName string

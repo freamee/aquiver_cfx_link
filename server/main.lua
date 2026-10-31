@@ -7,6 +7,7 @@ local Inventory = require("links.inventories.inventory")
 local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
 local SoundService = require("server.SoundService")
+local AttachmentService = require("server.attachment.attachment_service")
 
 local Notification = require("server.notification.NotificationService")
 
@@ -46,6 +47,8 @@ CfxServer.Net = {
 }
 
 CfxServer.Sound = SoundService
+CfxServer.Attachment = AttachmentService
+CfxServer.AttachmentService = AttachmentService
 
 CfxServer.RemoveCash = function(targetSource, count)
     return _G.RemoveCash(targetSource, count)

@@ -25,7 +25,6 @@ local Notification      = require("client.notification.Notification")
 local Proficiency       = require("client.resources.aqv_proficiency.Proficiency")
 
 local SoundService      = require("client.SoundService")
--- local Attachment = require("client.attachment.Attachment")
 local AttachmentService = require("client.attachment.attachment_service")
 
 local Animation         = require("client.animation.animation")
@@ -54,6 +53,8 @@ Cfx.Animation         = Animation
 Cfx.AnimationSequence = AnimationSequence
 
 Cfx.Sound             = SoundService
+Cfx.Attachment        = AttachmentService
+Cfx.AttachmentService = AttachmentService
 
 Cfx.Notification      = Notification
 

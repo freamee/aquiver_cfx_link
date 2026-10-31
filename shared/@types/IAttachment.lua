@@ -1,16 +1,24 @@
 ---@class IAttachment
----@field id string
----@field modelHash string
----@field offsetPosition vector3
----@field offsetRotation vector3
----@field boneIndex number
----@field collision boolean
----@field particles IAttachmentPtfx[]
+---@field id? string
+---@field modelHash string|number
+---@field position? vector3
+---@field rotation? vector3
+---@field offsetPosition? vector3 Legacy alias for position.
+---@field offsetRotation? vector3 Legacy alias for rotation.
+---@field boneIndex? number Ped bone ID; defaults to -1.
+---@field collision? boolean
+---@field particles? table<string, IAttachmentPtfx>
+---@field sounds? table<string, IAttachmentSound>
 
 ---@class IAttachmentPtfx
----@field id string
+---@field id? string
 ---@field dictionary string
 ---@field name string
----@field position vector3
----@field rotation vector3
----@field scale number
+---@field position? vector3
+---@field rotation? vector3
+---@field scale? number
+
+---@class IAttachmentSound
+---@field id? string
+---@field audioName string
+---@field audioRef string

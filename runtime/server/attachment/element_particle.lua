@@ -41,6 +41,11 @@ function ElementParticle:setOffset(position, rotation, scale)
         self._scale = scale
     end
 
+    local attachment = self:getAttachment()
+    if attachment then
+        attachment:update()
+    end
+
     return true
 end
 
@@ -65,6 +70,7 @@ end
 ---@param rotation? vector3
 ---@param scale? number
 function ElementParticle:attach(targetSource, attachment, position, rotation, scale)
+    targetSource = tonumber(targetSource)
     local attachmentSource = attachment:getTargetSource()
 
     if attachmentSource and attachmentSource ~= targetSource then
@@ -85,9 +91,7 @@ function ElementParticle:destroy()
         attachment:removeParticle(self:getId())
     end
 
-    self._destroyed = true
-
-    return true
+    return Element.destroy(self)
 end
 
 return ElementParticle

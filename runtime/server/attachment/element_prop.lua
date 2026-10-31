@@ -1,5 +1,5 @@
 local Element = require("runtime.server.attachment.element")
-local Registry = require("lua.server.AttachmentRegistry")
+local Registry = require("runtime.server.attachment.attachment_registry")
 
 ---@class S_ElementProp : S_Element
 ---@field private _modelHash string | number
@@ -16,12 +16,13 @@ function ElementProp:constructor(id, modelHash, ownerResource)
     self:super(id)
 
     self._modelHash = modelHash
-    self._ownerResource = ownerResource or GetCurrentResourceName()
+    self._ownerResource = ownerResource or GetInvokingResource() or GetCurrentResourceName()
     self._particles = {}
     self._sounds = {}
     self._position = vector3(0, 0, 0)
     self._rotation = vector3(0, 0, 0)
     self._boneIndex = -1
+    self._collision = false
 end
 
 function ElementProp:getTargetSource()
@@ -30,6 +31,22 @@ end
 
 function ElementProp:getOwnerResource()
     return self._ownerResource
+end
+
+---@param enabled boolean
+function ElementProp:setCollisionState(enabled)
+    if self:isDestroyed() then
+        return false
+    end
+
+    self._collision = enabled
+    self:update()
+
+    return true
+end
+
+function ElementProp:getCollisionState()
+    return self._collision
 end
 
 ---@param id string
@@ -68,7 +85,7 @@ function ElementProp:setOffset(position, rotation, boneIndex)
 end
 
 function ElementProp:update()
-    if self._targetSource then
+    if not self:isDestroyed() and self._targetSource then
         Registry:publish(self._targetSource, self)
     end
 end
@@ -86,6 +103,11 @@ function ElementProp:addParticle(particle, position, rotation, scale)
 
     if owner and owner ~= self then
         return false
+    end
+
+    if owner == self then
+        particle:setOffset(position, rotation, scale)
+        return self
     end
 
     local id = particle:getId()
@@ -180,6 +202,7 @@ function ElementProp:toDefinition()
         position = vector3(self._position.x, self._position.y, self._position.z),
         rotation = vector3(self._rotation.x, self._rotation.y, self._rotation.z),
         boneIndex = self._boneIndex,
+        collision = self._collision,
         particles = {},
         sounds = {},
     }
@@ -200,6 +223,7 @@ end
 ---@param rotation? vector3
 ---@param boneIndex? number
 function ElementProp:attach(targetSource, position, rotation, boneIndex)
+    targetSource = tonumber(targetSource)
     if self:isDestroyed() or not targetSource or targetSource <= 0 then
         return false
     end
@@ -208,13 +232,13 @@ function ElementProp:attach(targetSource, position, rotation, boneIndex)
         Registry:remove(self._targetSource, self)
     end
 
-    position = position or vector3(0, 0, 0)
-    rotation = rotation or vector3(0, 0, 0)
+    position = position or self._position
+    rotation = rotation or self._rotation
 
     self._targetSource = targetSource
     self._position = vector3(position.x, position.y, position.z)
     self._rotation = vector3(rotation.x, rotation.y, rotation.z)
-    self._boneIndex = boneIndex or -1
+    self._boneIndex = boneIndex or self._boneIndex
 
     self:update()
 
@@ -231,6 +255,8 @@ function ElementProp:destroy()
         self._targetSource = nil
     end
 
+    Element.destroy(self)
+
     for _, particle in pairs(self._particles) do
         particle:setAttachment(nil)
         particle:destroy()
@@ -243,8 +269,6 @@ function ElementProp:destroy()
 
     self._particles = {}
     self._sounds = {}
-    self._destroyed = true
-
     return true
 end
 

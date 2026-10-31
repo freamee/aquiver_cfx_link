@@ -22,6 +22,9 @@ end
 ---@field private _handle number?
 ---@field private _generation number
 ---@field private _releaseAsset? fun()
+---@field private _position vector3
+---@field private _rotation vector3
+---@field private _scale number
 local ElementParticle = lib.class("C_ElementParticle", Element)
 
 ---@param id string
@@ -33,6 +36,9 @@ function ElementParticle:constructor(id, dictionary, name)
     self._dictionary = dictionary
     self._name = name
     self._generation = 0
+    self._position = vector3(0, 0, 0)
+    self._rotation = vector3(0, 0, 0)
+    self._scale = 1.0
 end
 
 function ElementParticle:getDictionary()
@@ -41,6 +47,21 @@ end
 
 function ElementParticle:getName()
     return self._name
+end
+
+---@param position? vector3
+---@param rotation? vector3
+---@param scale? number
+function ElementParticle:setOffset(position, rotation, scale)
+    self._position = position or self._position
+    self._rotation = rotation or self._rotation
+    self._scale = scale or self._scale
+
+    if self._handle then
+        local offset, angles = self._position, self._rotation
+        SetParticleFxLoopedOffsets(self._handle, offset.x, offset.y, offset.z, angles.x, angles.y, angles.z)
+        SetParticleFxLoopedScale(self._handle, self._scale)
+    end
 end
 
 function ElementParticle:_requestAsset()
@@ -77,6 +98,7 @@ end
 ---@return boolean
 function ElementParticle:startOn(element, position, rotation, scale)
     self:stop()
+    self:setOffset(position, rotation, scale)
 
     if self:isDestroyed() or element:isDestroyed() then
         return false
@@ -125,6 +147,9 @@ function ElementParticle:startOn(element, position, rotation, scale)
 
     UseParticleFxAsset(self._dictionary)
 
+    -- Offset updates can arrive while the dictionary is loading.
+    position, rotation = self._position, self._rotation
+
     self._handle = StartParticleFxLoopedOnEntity(
         self._name,
         entity,
@@ -134,7 +159,7 @@ function ElementParticle:startOn(element, position, rotation, scale)
         rotation.x,
         rotation.y,
         rotation.z,
-        scale or 1.0,
+        self._scale,
         false,
         false,
         false

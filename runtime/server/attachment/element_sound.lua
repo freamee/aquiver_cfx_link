@@ -30,6 +30,7 @@ end
 ---@param targetSource number
 ---@param attachment S_ElementProp
 function ElementSound:attach(targetSource, attachment)
+    targetSource = tonumber(targetSource)
     local attachmentSource = attachment:getTargetSource()
 
     if attachmentSource and attachmentSource ~= targetSource then
@@ -50,9 +51,7 @@ function ElementSound:destroy()
         attachment:removeSound(self:getId())
     end
 
-    self._destroyed = true
-
-    return true
+    return Element.destroy(self)
 end
 
 return ElementSound

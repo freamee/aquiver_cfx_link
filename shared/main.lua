@@ -1,25 +1,27 @@
-local lerp = require("shared.lerp")
-local Tick = require("shared.Tick")
-local Log = require("shared.Log")
-local SmoothNumber = require("shared.SmoothNumber")
-local GetOffsetFromCoord = require("shared.GetOffsetFromCoord")
-local Transform = require("shared.Transform")
-local Color = require("shared.Color")
-local Sequence = require("shared.timing.sequence")
+local lerp                   = require("shared.lerp")
+local Tick                   = require("shared.Tick")
+local Log                    = require("shared.Log")
+local SmoothNumber           = require("shared.SmoothNumber")
+local GetOffsetFromCoord     = require("shared.GetOffsetFromCoord")
+local Transform              = require("shared.Transform")
+local Color                  = require("shared.Color")
+local Sequence               = require("shared.timing.sequence")
+local Animation              = require("shared.animation.index")
 
-CfxShared = {}
+CfxShared                    = {}
 
-CfxShared.Debug = false
+CfxShared.Debug              = false
 
 CfxShared.GetOffsetFromCoord = GetOffsetFromCoord
-CfxShared.lerp = lerp
-CfxShared.Tick = Tick
-CfxShared.Log = Log
-CfxShared.SmoothNumber = SmoothNumber
-CfxShared.Transform = Transform
-CfxShared.Color = Color
-CfxShared.Sequence = Sequence
+CfxShared.lerp               = lerp
+CfxShared.Tick               = Tick
+CfxShared.Log                = Log
+CfxShared.SmoothNumber       = SmoothNumber
+CfxShared.Transform          = Transform
+CfxShared.Color              = Color
+CfxShared.Sequence           = Sequence
+CfxShared.Animation          = Animation
 
-CfxShared.isShowcaseServer = function()
+CfxShared.isShowcaseServer   = function()
     return GetConvarBool("aquiver_showcase_server", false)
 end

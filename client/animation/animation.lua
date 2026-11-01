@@ -44,6 +44,8 @@ end
 ---@param startAt number
 function Animation:setStartAt(startAt)
     self._startAt = startAt
+
+    return self
 end
 
 function Animation:getStartAt()
@@ -116,8 +118,24 @@ function Animation:setBlendSpeed(blendIn, blendOut)
 end
 
 ---@param ped number
-function Animation:play(ped)
-    lib.requestAnimDict(self._dictionary)
+---@param shouldCancel? fun(): boolean
+---@param flag? number Override for this playback only.
+---@return boolean started
+---@return number? startedAt
+function Animation:play(ped, shouldCancel, flag)
+    local function cancelled()
+        return not DoesEntityExist(ped) or (shouldCancel and shouldCancel())
+    end
+
+    if cancelled() then
+        return false
+    end
+
+    local loaded = pcall(lib.requestAnimDict, self._dictionary)
+
+    if not loaded or cancelled() then
+        return false
+    end
 
     TaskPlayAnim(
         ped,
@@ -126,23 +144,39 @@ function Animation:play(ped)
         self._blendInSpeed,
         self._blendOutSpeed,
         self._duration,
-        self._flag,
+        flag or self._flag,
         self._playbackRate,
         false,
         false,
         false
     )
 
-    while not IsEntityPlayingAnim(ped, self._dictionary, self._name, 3) do
+    local requestedAt = GetGameTimer()
+
+    -- The task is queued; let the ped process it before checking its state.
+    Citizen.Wait(0)
+
+    while not cancelled() do
+        if IsEntityPlayingAnim(ped, self._dictionary, self._name, 3) then
+            SetEntityAnimCurrentTime(
+                ped,
+                self._dictionary,
+                self._name,
+                self._startAt
+            )
+
+            return true, GetGameTimer()
+        end
+
+        if GetGameTimer() - requestedAt >= 5000 then
+            self:stop(ped)
+            return false
+        end
+
         Citizen.Wait(0)
     end
 
-    SetEntityAnimCurrentTime(
-        ped,
-        self._dictionary,
-        self._name,
-        self._startAt
-    )
+    return false
 end
 
 ---@param ped number
@@ -151,7 +185,7 @@ function Animation:stop(ped)
         ped,
         self._dictionary,
         self._name,
-        self._blendOutSpeed
+        math.abs(self._blendOutSpeed)
     )
 end
 

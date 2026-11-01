@@ -1,8 +1,5 @@
 Cfx                     = {}
 
-local Tick              = require("shared.Tick")
-local lerp              = require("shared.lerp")
-
 -- -- Actor Entities
 local Prop              = require("client.classes.Prop")
 local Blip              = require("client.classes.Blip")
@@ -27,9 +24,6 @@ local Proficiency       = require("client.resources.aqv_proficiency.Proficiency"
 local SoundService      = require("client.SoundService")
 local AttachmentService = require("client.attachment.attachment_service")
 
-local Animation         = require("client.animation.animation")
-local AnimationSequence = require("client.animation.animation_sequence")
-
 require("links.inventories.one_inventory.client")
 require("links.inventories.ox_inventory.client")
 require("links.inventories.quasar_inventory.client")
@@ -37,9 +31,6 @@ require("links.frameworks.esx.client")
 require("links.frameworks.qbcore.client")
 require("links.frameworks.qbox.client")
 require("links.frameworks.vrp.client")
-
-Cfx.lerp              = lerp
-Cfx.Tick              = Tick
 
 Cfx.Graphics          = Graphics
 Cfx.GameplayCamera    = GameplayCamera
@@ -49,14 +40,15 @@ Cfx.DrawSpriteMeter   = DrawSpriteMeter
 Cfx.DrawSpriteMeter3D = DrawSpriteMeter3D
 Cfx.Game              = Game
 
-Cfx.Animation         = Animation
-Cfx.AnimationSequence = AnimationSequence
+Cfx.Animation         = require("client.animation.index")
 
 Cfx.Sound             = SoundService
 Cfx.Attachment        = AttachmentService
 Cfx.AttachmentService = AttachmentService
 
 Cfx.Notification      = Notification
+
+Cfx.Entity            = require("client.classes.index")
 
 -- -- Registering actor entities.
 Cfx.Actor             = {}

@@ -1,8 +1,3 @@
-local Vehicle = require("server.classes.Vehicle")
-local Prop = require("server.classes.Prop")
-local Actor = require("server.classes.Entity")
-local Ped = require("server.classes.Ped")
-
 local Inventory = require("links.inventories.inventory")
 local Proficiency = require("server.resources.aqv_proficiency.Proficiency")
 
@@ -10,12 +5,6 @@ local SoundService = require("server.SoundService")
 local AttachmentService = require("server.attachment.attachment_service")
 
 local Notification = require("server.notification.NotificationService")
-
-local NetEntity = require("server.classes.NetEntity")
-local NetPed = require("server.classes.NetPed")
-local NetPlayer = require("server.classes.NetPlayer")
-local NetProp = require("server.classes.NetProp")
-local NetVehicle = require("server.classes.NetVehicle")
 
 -- Loading link framework(s)
 require("links.frameworks.esx.server")
@@ -32,19 +21,7 @@ CfxServer = {}
 
 CfxServer.Notify = Notification
 
-CfxServer.Actor = {}
-CfxServer.Actor.Vehicle = Vehicle
-CfxServer.Actor.Entity = Actor
-CfxServer.Actor.Prop = Prop
-CfxServer.Actor.Ped = Ped
-
-CfxServer.Net = {
-    Entity = NetEntity,
-    Ped = NetPed,
-    Player = NetPlayer,
-    Prop = NetProp,
-    Vehicle = NetVehicle
-}
+CfxServer.Entity = require("server.classes.index")
 
 CfxServer.Sound = SoundService
 CfxServer.Attachment = AttachmentService
@@ -69,7 +46,6 @@ end
 
 ---@return string
 CfxServer.GetIdentifier = function(targetSource)
-    -- return GetPlayerIdentifier(targetSource, 0)
     return _G.GetIdentifier(targetSource) --[[@as string]]
 end
 

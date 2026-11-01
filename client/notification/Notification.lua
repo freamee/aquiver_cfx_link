@@ -1,5 +1,6 @@
 local Graphics = require("client.Graphics")
 local Tick = require("shared.Tick")
+local Color = require("shared.Color")
 
 local Notification = {}
 Notification._pops = {}
@@ -51,7 +52,7 @@ function Notification:onTick()
                 v.message,
                 0.25,
                 true,
-                { 255, 255, 255, alpha }
+                Color:new(255, 255, 255, alpha)
             )
         end
     end

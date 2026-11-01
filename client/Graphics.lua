@@ -6,10 +6,9 @@ local Graphics = {}
 ---@param text string
 ---@param scale number
 ---@param center boolean
----@param color? [number, number, number, number]
+---@param color? Color
 function Graphics:drawTextThisFrame2D(position, text, scale, center, color)
-    -- color = color and color or { 255, 255, 255, 255 }
-    color = Color:new(255, 255, 255, 255)
+    color = color or Color:new(255, 255, 255, 255)
 
     SetTextScale(0.0, scale)
     SetTextProportional(true)
@@ -33,10 +32,9 @@ end
 ---@param text string
 ---@param scale number
 ---@param center boolean
----@param color? [number, number, number, number]
+---@param color? Color
 function Graphics:drawTextThisFrame3D(position, text, scale, center, color)
-    -- color = color and color or { 255, 255, 255, 255 }
-    color = Color:new(255, 255, 255, 255)
+    color = color or Color:new(255, 255, 255, 255)
 
     SetTextScale(0.0, scale)
     SetTextProportional(true)
@@ -61,7 +59,7 @@ end
 ---@param type number
 ---@param position vector3
 ---@param scale? vector3
----@param color? [number, number, number, number]
+---@param color? Color
 ---@param rotation? vector3
 ---@param direction? vector3
 ---@param bobUpAndDown? boolean
@@ -69,14 +67,12 @@ end
 ---@param rotate? boolean
 function Graphics:drawMarker(type, position, scale, color, rotation, direction, bobUpAndDown, faceCamera, rotate)
     scale = scale or vector3(1.0, 1.0, 1.0)
-    color = color or { 255, 255, 255, 255 }
+    color = color or Color:new(255, 255, 255, 255)
     rotation = rotation or vector3(0, 0, 0)
     direction = direction or vector(0, 0, 0)
     bobUpAndDown = bobUpAndDown or false
     faceCamera = faceCamera or false
     rotate = rotate or false
-
-    local r, g, b, a = table.unpack(color)
 
     DrawMarker(
         type,
@@ -92,10 +88,10 @@ function Graphics:drawMarker(type, position, scale, color, rotation, direction, 
         scale.x,
         scale.y,
         scale.z,
-        r,
-        g,
-        b,
-        a,
+        color:getR(),
+        color:getG(),
+        color:getB(),
+        color:getA(),
         bobUpAndDown,
         faceCamera,
         2,
@@ -110,7 +106,7 @@ end
 ---@param textureName string
 ---@param position vector3
 ---@param scale number
----@param color [number, number, number, number]
+---@param color Color
 ---@param heading? number
 function Graphics:drawSprite3D(textureDict, textureName, position, scale, color, heading)
     local result, screenX, screenY = GetScreenCoordFromWorldCoord(position.x, position.y, position.z)
@@ -130,10 +126,11 @@ end
 ---@param textureName string
 ---@param position vector2
 ---@param scale number
----@param color [number, number, number, number]
+---@param color Color
 ---@param heading? number
 function Graphics:drawSprite2D(textureDict, textureName, position, scale, color, heading)
-    heading = heading and heading or 0
+    color = color or Color:new(255, 255, 255, 255)
+    heading = heading or 0
 
     local textureResolution = GetTextureResolution(textureDict, textureName)
     local screenX, screenY = GetScreenActiveResolution()
@@ -154,10 +151,10 @@ function Graphics:drawSprite2D(textureDict, textureName, position, scale, color,
             screenScaleWidth,
             screenScaleHeight,
             heading,
-            color[1],
-            color[2],
-            color[3],
-            color[4]
+            color:getR(),
+            color:getG(),
+            color:getB(),
+            color:getA()
         )
     else
         RequestStreamedTextureDict(textureDict, true)
@@ -169,8 +166,8 @@ end
 ---@param width? number
 ---@param height? number
 ---@param border? number
----@param color? [number, number, number, number]
----@param bgColor? [number, number, number, number]
+---@param color? Color
+---@param bgColor? Color
 function Graphics:drawBar3D(position, percentage, width, height, border, color, bgColor)
     local result, screenX, screenY = GetScreenCoordFromWorldCoord(
         position.x,
@@ -196,29 +193,36 @@ end
 ---@param width? number
 ---@param height? number
 ---@param border? number
----@param color? [number,number,number,number]
----@param bgColor? [number, number, number, number]
+---@param color? Color
+---@param bgColor? Color
 function Graphics:drawBar2D(position, percentage, width, height, border, color, bgColor)
-    width                    = width and width or 0.03
-    height                   = height and height or 0.0065
-    border                   = border and border or 0.001
-    color                    = color and color or { 255, 255, 255, 255 }
-    bgColor                  = bgColor and bgColor or { 50, 50, 50, 200 }
-    percentage               = percentage or 0
+    width             = width and width or 0.03
+    height            = height and height or 0.0065
+    border            = border and border or 0.001
+    color             = color and color or Color:new(255, 255, 255, 255)
+    bgColor           = bgColor and bgColor or Color:new(50, 50, 50, 200)
+    percentage        = percentage or 0
 
-    local aspectRatio        = GetScreenAspectRatio(false)
+    local aspectRatio = GetScreenAspectRatio(false)
 
-    local x, y               = table.unpack(position)
-    local r, g, b, a         = table.unpack(color)
-    local bgR, bgG, bgB, bgA = table.unpack(bgColor)
+    local x, y        = table.unpack(position)
 
-    width                    = width / aspectRatio
+    width             = width / aspectRatio
 
     -- Border
-    DrawRect(x, y, width + border * 2, height + border * 2, bgR, bgG, bgB, bgA);
+    DrawRect(
+        x,
+        y,
+        width + border * 2,
+        height + border * 2,
+        bgColor:getR(),
+        bgColor:getG(),
+        bgColor:getB(),
+        bgColor:getA()
+    )
 
     -- Background
-    DrawRect(x, y, width, height, 15, 15, 15, a);
+    DrawRect(x, y, width, height, 15, 15, 15, a)
 
     -- Content
     DrawRect(
@@ -226,11 +230,11 @@ function Graphics:drawBar2D(position, percentage, width, height, border, color, 
         y,
         (width * percentage) / 100,
         height,
-        r,
-        g,
-        b,
-        a
-    );
+        color:getR(),
+        color:getG(),
+        color:getB(),
+        color:getA()
+    )
 end
 
 ---@param position vector3

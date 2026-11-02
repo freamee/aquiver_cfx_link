@@ -1,14 +1,5 @@
 Cfx                     = {}
 
--- -- Actor Entities
-local Prop              = require("client.classes.Prop")
-local Blip              = require("client.classes.Blip")
-local Particle          = require("client.classes.Particle")
-local Ped               = require("client.classes.Ped")
-local Sound             = require("client.classes.Sound")
-local Entity            = require("client.classes.Entity")
-local Camera            = require("client.classes.Camera")
-
 local Cursor            = require("client.Cursor")
 local GameCursor        = require("client.GameCursor")
 local GameplayCamera    = require("client.GameplayCamera")
@@ -49,16 +40,6 @@ Cfx.AttachmentService = AttachmentService
 Cfx.Notification      = Notification
 
 Cfx.Entity            = require("client.classes.index")
-
--- -- Registering actor entities.
-Cfx.Actor             = {}
-Cfx.Actor.Camera      = Camera
-Cfx.Actor.Blip        = Blip
-Cfx.Actor.Entity      = Entity
-Cfx.Actor.Particle    = Particle
-Cfx.Actor.Ped         = Ped
-Cfx.Actor.Prop        = Prop
-Cfx.Actor.Sound       = Sound
 
 local Inventory       = require("client.inventories.inventory")
 

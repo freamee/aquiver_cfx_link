@@ -65,4 +65,8 @@ function NetEntity:setPositionNoOffset(position)
     )
 end
 
+function NetEntity:destroy()
+    DeleteEntity(self._entity)
+end
+
 return NetEntity

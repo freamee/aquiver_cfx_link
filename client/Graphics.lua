@@ -196,11 +196,11 @@ end
 ---@param color? Color
 ---@param bgColor? Color
 function Graphics:drawBar2D(position, percentage, width, height, border, color, bgColor)
-    width             = width and width or 0.03
-    height            = height and height or 0.0065
-    border            = border and border or 0.001
-    color             = color and color or Color:new(255, 255, 255, 255)
-    bgColor           = bgColor and bgColor or Color:new(50, 50, 50, 200)
+    width             = width or 0.03
+    height            = height or 0.0065
+    border            = border or 0.001
+    color             = color or Color:new(255, 255, 255, 255)
+    bgColor           = bgColor or Color:new(25, 25, 25, 200)
     percentage        = percentage or 0
 
     local aspectRatio = GetScreenAspectRatio(false)
@@ -295,7 +295,7 @@ function Graphics:drawInteractive2D(worldPosition, position, scale, cb, sprite, 
         cursorY >= position.y - height / 2 and
         cursorY <= position.y + height / 2
 
-    local drawColor = isHovering and { 50, 50, 50, alpha } or { 25, 25, 25, alpha }
+    local drawColor = isHovering and Color:new(50, 50, 50, alpha) or Color:new(25, 25, 25, alpha)
 
     self:drawSprite2D(
         "aquiver_cfx",
@@ -315,7 +315,13 @@ function Graphics:drawInteractive2D(worldPosition, position, scale, cb, sprite, 
             alpha
         }
 
-        self:drawSprite2D(textureDict, textureName, position, spriteScale, spriteColor)
+        self:drawSprite2D(
+            textureDict,
+            textureName,
+            position,
+            spriteScale,
+            Color:new(spriteColor[1], spriteColor[2], spriteColor[3], spriteColor[4])
+        )
     end
 
     if isHovering then

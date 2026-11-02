@@ -3,6 +3,9 @@ local lerp = require("shared.lerp")
 
 ---@class C_Prop : Entity
 ---@field private _moving boolean
+---@field private _forwardMatrix vector3
+---@field private _rightMatrix vector3
+---@field private _upMatrix vector3
 local Prop = lib.class("C_Prop", Entity)
 
 ---@param modelHash string | number
@@ -23,8 +26,12 @@ function Prop:constructor(modelHash, position, rotation, isNetwork)
             false
         )
     )
+
     self:setRotation(rotation)
+
     self._moving = false
+
+    self._forwardMatrix, self._rightMatrix, self._upMatrix = GetEntityMatrix(self._entity)
 end
 
 ---@param modelHash string
@@ -58,11 +65,11 @@ end
 
 ---@param scale number
 function Prop:setScale(scale)
-    local forward, right, up, position = GetEntityMatrix(self._entity)
+    local position = self:getPosition()
 
-    forward = forward * scale
-    right = right * scale
-    up = up * scale
+    local forward = self._forwardMatrix * scale
+    local right = self._rightMatrix * scale
+    local up = self._upMatrix * scale
 
     SetEntityMatrix(
         self._entity,

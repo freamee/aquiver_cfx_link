@@ -5,7 +5,7 @@
 ---@field description string
 ---@field multiplier number
 ---@field baseXp number
----@field pointCap number
+---@field levelCap number
 ---@field milestones ProficiencyMilestoneOptions[]
 
 ---@class ProficiencyMilestoneOptions
@@ -19,7 +19,7 @@
 ---@field name string
 ---@field description string
 ---@field icon string
----@field pointCap number
+---@field levelCap number
 ---@field baseXp number
 ---@field multiplier number
 ---@field resource string

@@ -185,7 +185,7 @@ function Animation:stop(ped)
         ped,
         self._dictionary,
         self._name,
-        math.abs(self._blendOutSpeed)
+        self._blendOutSpeed
     )
 end
 

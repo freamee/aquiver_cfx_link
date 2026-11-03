@@ -1,74 +1,44 @@
+local Smooth = require("shared.animation.Smooth")
+
 ---@class SmoothNumber : OxClass
----@field private _value number
+---@field private _animation SmoothAnimation
 ---@field private _target number
 ---@field private _speed number
----@field private _running boolean
----@field private _onUpdate fun(value: number)
 local SmoothNumber = lib.class("SmoothNumber")
 
 ---@param value number
----@param speed number
----@param onUpdate fun(value: number)
-function SmoothNumber:constructor(value, speed, onUpdate)
-    self._value = value
+---@param speed? number
+function SmoothNumber:constructor(value, speed)
     self._target = value
-    self._onUpdate = onUpdate
-
     self._speed = speed or 2.0
 
-    self._running = true
+    assert(self._speed > 0, "Speed must be positive")
 
-    self:_start()
-end
-
----@private
-function SmoothNumber:_start()
-    Citizen.CreateThread(function()
-        local lastTime = GetGameTimer()
-
-        while self._running do
-            Citizen.Wait(20)
-
-            local now = GetGameTimer()
-            local deltaTime = (now - lastTime) / 1000.0
-            lastTime = now
-
-            self:_update(deltaTime)
-        end
-    end)
-end
-
----@private
----@param deltaTime number
-function SmoothNumber:_update(deltaTime)
-    local difference = self._target - self._value
-
-    if math.abs(difference) < 0.01 then
-        self._value = self._target
-        self._onUpdate(self._value)
-        return
-    end
-
-    local step = self._speed * deltaTime
-    local direction = difference > 0 and 1 or -1
-
-    if math.abs(difference) <= step then
-        self._value = self._target
-    else
-        self._value = self._value + direction * step
-    end
-
-    self._onUpdate(self._value)
+    self._animation = Smooth:new(value)
 end
 
 ---@param target number
 function SmoothNumber:setTarget(target)
+    if self._target == target then return end
+
+    local current = self._animation:get()
+    local distance = math.abs(target - current)
+
     self._target = target
+
+    if distance < 0.01 then
+        self._animation:reset(target)
+        return
+    end
+
+    local duration = (distance / self._speed) * 1000
+
+    self._animation:set(target, duration)
 end
 
 ---@return number
 function SmoothNumber:get()
-    return self._value
+    return self._animation:get()
 end
 
 ---@return number
@@ -78,7 +48,21 @@ end
 
 ---@param speed number
 function SmoothNumber:setSpeed(speed)
+    assert(speed > 0, "Speed must be positive")
+
     self._speed = speed
+
+    if self._animation:isPlaying() then
+        local current = self._animation:get()
+        local distance = math.abs(self._target - current)
+
+        if distance > 0 then
+            self._animation:set(
+                self._target,
+                (distance / speed) * 1000
+            )
+        end
+    end
 end
 
 ---@return number
@@ -88,11 +72,7 @@ end
 
 ---@return boolean
 function SmoothNumber:isComplete()
-    return self._value == self._target
-end
-
-function SmoothNumber:destroy()
-    self._running = false
+    return not self._animation:isPlaying()
 end
 
 return SmoothNumber

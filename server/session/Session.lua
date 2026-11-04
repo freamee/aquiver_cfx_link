@@ -1,5 +1,13 @@
+---@class ISessionOptions
+---@field id string
+---@field startedAt number
+---@field duration number
+---@field expiresAt number
+---@field data table
+---@field onEnd? fun(reason: string, data: table)
+
 ---@class Session : OxClass
----@field private _sessions table<number, table>
+---@field private _sessions table<number, ISessionOptions>
 ---@field private _event EventHandler
 local Session = lib.class("Session")
 
@@ -10,13 +18,30 @@ function Session:constructor()
     end)
 end
 
+---@private
+---@param playerSource number
+---@param reason string
+function Session:_end(playerSource, reason)
+    local session = self._sessions[playerSource]
+    if not session then return false end
+
+    self._sessions[playerSource] = nil
+
+    if session.onEnd then
+        session.onEnd(reason, session.data)
+    end
+
+    return true, session.data
+end
+
 ---@param playerSource number
 ---@param id string
 ---@param duration number
 ---@param timeout? number
 ---@param data? table
+---@param onEnd? fun(reason: string, data: table)
 ---@return boolean
-function Session:start(playerSource, id, duration, timeout, data)
+function Session:start(playerSource, id, duration, timeout, data, onEnd)
     if self._sessions[playerSource] then
         return false
     end
@@ -28,14 +53,15 @@ function Session:start(playerSource, id, duration, timeout, data)
         id = id,
         startedAt = GetGameTimer(),
         duration = duration,
-        data = data
+        data = data,
+        onEnd = onEnd
     }
 
     self._sessions[playerSource] = session
 
     SetTimeout(timeout, function()
         if self._sessions[playerSource] == session then
-            self._sessions[playerSource] = nil
+            self:_end(playerSource, "timeout")
         end
     end)
 
@@ -44,38 +70,36 @@ end
 
 ---@param playerSource number
 ---@param id string
----@return boolean, table?
+---@return boolean, table
 function Session:complete(playerSource, id)
     local session = self._sessions[playerSource]
     if not session then
-        return false
+        return false, {}
     end
 
     if session.id ~= id then
-        return false
+        return false, {}
     end
 
-    local elapsed = GetGameTimer() - session.startedAt
+    local now = GetGameTimer()
+    local elapsed = now - session.startedAt
+
+    if now >= session.expiresAt then
+        self:_end(playerSource, "timeout")
+        return false, {}
+    end
 
     if elapsed < session.duration then
-        return false
+        return false, {}
     end
 
-    self._sessions[playerSource] = nil
-
-    return true, session.data
+    return self:_end(playerSource, "completed")
 end
 
 ---@param playerSource number
 ---@return boolean
 function Session:cancel(playerSource)
-    if not self._sessions[playerSource] then
-        return false
-    end
-
-    self._sessions[playerSource] = nil
-
-    return true
+    return self:_end(playerSource, "cancelled")
 end
 
 ---@param playerSource number

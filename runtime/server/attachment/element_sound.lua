@@ -30,7 +30,6 @@ end
 ---@param targetSource number
 ---@param attachment S_ElementProp
 function ElementSound:attach(targetSource, attachment)
-    targetSource = tonumber(targetSource)
     local attachmentSource = attachment:getTargetSource()
 
     if attachmentSource and attachmentSource ~= targetSource then

@@ -8,7 +8,7 @@ local Attachment = lib.class("S_Attachment")
 ---@param targetSource number
 ---@param id string
 function Attachment:constructor(targetSource, id)
-    self._targetSource = tonumber(targetSource)
+    self._targetSource = targetSource
     self._id = id
 end
 

@@ -4,7 +4,7 @@ local Registry = require("runtime.server.attachment.attachment_registry")
 ---@class S_ElementProp : S_Element
 ---@field private _modelHash string | number
 ---@field private _ownerResource string
----@field private _targetSource number?
+---@field private _targetSource number
 ---@field private _particles table<string, S_ElementParticle>
 ---@field private _sounds table<string, S_ElementSound>
 local ElementProp = lib.class("S_ElementProp", Element)

@@ -17,7 +17,11 @@ function NetVehicle.Create(modelHash, position, rotation)
         rotation.z
     )
 
-    return NetVehicle:new(id)
+    local entity = NetVehicle:new(id)
+
+    entity:setRotation(rotation)
+
+    return entity
 end
 
 ---@param entity number

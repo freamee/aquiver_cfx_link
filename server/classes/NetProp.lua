@@ -17,7 +17,11 @@ function NetProp.Create(modelHash, position, rotation)
         false
     )
 
-    return NetProp:new(id)
+    local entity = NetProp:new(id)
+
+    entity:setRotation(rotation)
+
+    return entity
 end
 
 ---@param entity number

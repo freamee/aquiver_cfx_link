@@ -10,7 +10,7 @@ end
 
 ---@param id string
 function Proficiency:Serialize(id)
-    return exports.oxmysql:serialize(id)
+    return exports.aqv_proficiency:serialize(id)
 end
 
 function Proficiency:SerializeAll()

@@ -18,6 +18,8 @@ require("links.inventories.quasar_inventory.server")
 
 CfxServer = {}
 
+CfxServer.Session = require("server.session.Session")
+
 CfxServer.Notify = Notification
 
 CfxServer.Entity = require("server.classes.index")

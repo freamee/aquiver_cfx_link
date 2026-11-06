@@ -49,10 +49,13 @@ function Session:start(playerSource, id, duration, timeout, data, onEnd)
     duration = math.max(0, duration)
     timeout = math.max(duration + 1000, timeout or duration + 10000)
 
+    local now = GetGameTimer()
+
     local session = {
         id = id,
         startedAt = GetGameTimer(),
         duration = duration,
+        expiresAt = now + timeout,
         data = data,
         onEnd = onEnd
     }

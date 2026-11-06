@@ -285,4 +285,19 @@ function Tween:isPaused()
     return self._playing and self._paused
 end
 
+---@param ms number
+---@return C_Tween
+function Tween:seek(ms)
+    self._elapsed = clamp(ms, 0, self._duration)
+    self._startedAt = GetGameTimer()
+
+    local progress = updateValue(self)
+
+    if self._onUpdate then
+        self._onUpdate(self._value, progress)
+    end
+
+    return self
+end
+
 return Tween

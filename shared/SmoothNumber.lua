@@ -1,7 +1,8 @@
 local Smooth = require("shared.animation.Smooth")
+local Linear = require("shared.animation.Linear")
 
 ---@class SmoothNumber : OxClass
----@field private _animation SmoothAnimation
+---@field private _animation LinearAnimation
 ---@field private _target number
 ---@field private _speed number
 local SmoothNumber = lib.class("SmoothNumber")
@@ -14,7 +15,7 @@ function SmoothNumber:constructor(value, speed)
 
     assert(self._speed > 0, "Speed must be positive")
 
-    self._animation = Smooth:new(value)
+    self._animation = Linear:new(value)
 end
 
 ---@param target number

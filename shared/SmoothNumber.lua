@@ -17,6 +17,12 @@ function SmoothNumber:constructor(value, speed)
     self._animation = Linear:new(value)
 end
 
+---@param callback fun(value: number)
+function SmoothNumber:onChange(callback)
+    self._animation:onChange(callback)
+    return self
+end
+
 ---@param target number
 function SmoothNumber:setTarget(target)
     if self._target == target then return end

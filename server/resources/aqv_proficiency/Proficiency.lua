@@ -3,14 +3,14 @@
 ---@field name string
 ---@field icon string
 ---@field description string
+---@field benefit string
+---@field benefitPerLevel number
 ---@field multiplier number
 ---@field baseXp number
 ---@field levelCap number
 ---@field milestones ProficiencyMilestoneOptions[]
 
 ---@class ProficiencyMilestoneOptions
----@field id string
----@field name string
 ---@field value number
 ---@field level number
 
@@ -18,6 +18,7 @@
 ---@field id string
 ---@field name string
 ---@field description string
+---@field benefit string
 ---@field icon string
 ---@field levelCap number
 ---@field baseXp number
@@ -26,8 +27,6 @@
 ---@field milestones IProficiencyMilestone[]
 
 ---@class IProficiencyMilestone
----@field id string
----@field name string
 ---@field level number
 ---@field value number
 
@@ -49,7 +48,7 @@ function Proficiency.GetAll()
     return exports.aqv_proficiency:getAll()
 end
 
-function Proficiency:IsReady()
+function Proficiency.IsReady()
     return GetResourceState("aqv_proficiency") == "started"
 end
 
@@ -83,23 +82,23 @@ end
 
 ---@param targetSource number
 ---@param id string
-function Proficiency:GetLevel(targetSource, id)
+function Proficiency.GetLevel(targetSource, id)
     return exports.aqv_proficiency:getLevel(targetSource, id)
 end
 
-function Proficiency:GetCurrentXp(targetSource, id)
+function Proficiency.GetCurrentXp(targetSource, id)
     return exports.aqv_proficiency:getCurrentXp(targetSource, id)
 end
 
 ---@param targetSource number
 ---@param id string
-function Proficiency:GetRequiredXp(targetSource, id)
+function Proficiency.GetRequiredXp(targetSource, id)
     return exports.aqv_proficiency:getRequiredXp(targetSource, id)
 end
 
 ---@param targetSource number
 ---@param id string
-function Proficiency:GetNextRequiredXp(targetSource, id)
+function Proficiency.GetNextRequiredXp(targetSource, id)
     return exports.aqv_proficiency:getNextRequiredXp(targetSource, id)
 end
 

@@ -75,4 +75,21 @@ function Cursor:force(forceState)
     self._forceState = forceState
 end
 
+exports("SetCursorState", function(...)
+    return Cursor:set(...)
+end)
+exports("ForceCursorState", function(...)
+    return Cursor:force(...)
+end)
+exports("GetCursorState", function()
+    return Cursor:get()
+end)
+
+RegisterCommand("TOGGLE_CURSOR_STATE", function()
+    Cursor:toggle()
+end, false)
+
+RegisterKeyMapping("TOGGLE_CURSOR_STATE", "~b~[AQUIVER] ~s~Cursor", "keyboard", "m")
+
+
 return Cursor

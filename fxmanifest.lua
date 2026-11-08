@@ -28,6 +28,7 @@ files {
     "txd/**",
     "links/**",
     "client/**.lua",
+    "runtime/client/**",
     "shared/**.lua",
     "runtime/client/*.lua"
 }

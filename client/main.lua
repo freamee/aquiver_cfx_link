@@ -1,6 +1,5 @@
 Cfx                     = {}
 
-local Cursor            = require("client.Cursor")
 local GameCursor        = require("client.GameCursor")
 local GameplayCamera    = require("client.GameplayCamera")
 local Graphics          = require("client.Graphics")
@@ -25,7 +24,6 @@ require("links.frameworks.vrp.client")
 
 Cfx.Graphics          = Graphics
 Cfx.GameplayCamera    = GameplayCamera
-Cfx.Cursor            = Cursor
 Cfx.GameCursor        = GameCursor
 Cfx.DrawSpriteMeter   = DrawSpriteMeter
 Cfx.DrawSpriteMeter3D = DrawSpriteMeter3D

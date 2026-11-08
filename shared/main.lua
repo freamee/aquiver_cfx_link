@@ -7,7 +7,6 @@ local Transform              = require("shared.Transform")
 local Color                  = require("shared.Color")
 local Sequence               = require("shared.timing.sequence")
 local Animation              = require("shared.animation.index")
-local EventManager           = require("shared.events.EventManager")
 local Timing                 = require("shared.timing.index")
 
 CfxShared                    = {}
@@ -24,7 +23,6 @@ CfxShared.Color              = Color
 CfxShared.Sequence           = Sequence
 CfxShared.Timing             = Timing
 CfxShared.Animation          = Animation
-CfxShared.Events             = EventManager:new()
 
 CfxShared.isShowcaseServer   = function()
     return GetConvarBool("aquiver_showcase_server", false)

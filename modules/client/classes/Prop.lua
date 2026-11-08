@@ -1,0 +1,129 @@
+local Entity = require("client.classes.Entity")
+local lerp = require("shared.lerp")
+
+---@class C_Prop : Entity
+---@field private _moving boolean
+---@field private _forwardMatrix vector3
+---@field private _rightMatrix vector3
+---@field private _upMatrix vector3
+local Prop = lib.class("C_Prop", Entity)
+
+---@param modelHash string
+---@param position vector3
+---@param rotation vector3
+---@param isNetwork boolean
+function Prop.Create(modelHash, position, rotation, isNetwork)
+    local id = CreateObjectNoOffset(
+        modelHash,
+        position.x,
+        position.y,
+        position.z,
+        isNetwork,
+        isNetwork,
+        false
+    )
+
+    local entity = Prop:new(id)
+
+    entity:setRotation(rotation)
+
+    return entity
+end
+
+---@param id number
+function Prop:constructor(id)
+    self:super(id)
+
+    -- self._moving = false
+
+    -- self._forwardMatrix, self._rightMatrix, self._upMatrix = GetEntityMatrix(self._entity)
+end
+
+---@param modelHash string
+function Prop:setModelHash(modelHash)
+    local position = self:getPosition()
+    local rotation = self:getRotation()
+
+    self:destroy()
+
+    self._entity = CreateObjectNoOffset(
+        modelHash,
+        position.x,
+        position.y,
+        position.z,
+        false,
+        false,
+        false
+    )
+
+    self:setRotation(rotation)
+end
+
+---@param variation number
+function Prop:setTextureVariation(variation)
+    SetObjectTextureVariation(self._entity, variation)
+end
+
+function Prop:getTextureVariation()
+    return GetObjectTextureVariation(self._entity)
+end
+
+---@param scale number
+function Prop:setScale(scale)
+    local position = self:getPosition()
+
+    local forward = self._forwardMatrix * scale
+    local right = self._rightMatrix * scale
+    local up = self._upMatrix * scale
+
+    SetEntityMatrix(
+        self._entity,
+        forward.x, forward.y, forward.z,
+        right.x, right.y, right.z,
+        up.x, up.y, up.z,
+        position.x, position.y, position.z
+    )
+end
+
+function Prop:isMoving()
+    return self._moving
+end
+
+function Prop:stopMoving()
+    self._moving = false
+end
+
+---@param destination vector3
+---@param duration number
+function Prop:moveTo(destination, duration)
+    local start = self:getPosition()
+    local startedAt = GetGameTimer()
+
+    self._moving = true
+
+    Citizen.CreateThread(function()
+        while self._moving do
+            local t = (GetGameTimer() - startedAt) / duration
+
+            if t >= 1.0 then
+                self:setPosition(destination)
+                break
+            end
+
+            -- Smoothstep easing
+            local eased = t * t * (3.0 - 2.0 * t)
+
+            local toX = lerp(start.x, destination.x, eased)
+            local toY = lerp(start.y, destination.y, eased)
+            local toZ = lerp(start.z, destination.z, eased)
+
+            self:setPosition(
+                vector3(toX, toY, toZ)
+            )
+
+            Citizen.Wait(0)
+        end
+    end)
+end
+
+return Prop

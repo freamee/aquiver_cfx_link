@@ -1,55 +1,58 @@
-local AttachmentManager = require("runtime.client.attachment_manager")
-local AttachmentAPI = require("runtime.client.attachment_api")
+local Cursor = require("runtime.client.cursor.index")
 
-local attachments = AttachmentManager:new()
-local api = AttachmentAPI:new(attachments)
+RegisterCommand("TOGGLE_CURSOR_STATE", function()
+    Cursor:toggle()
+end, false)
 
-exports("createAttachment", function(id, definition)
-    local ownerResource = GetInvokingResource() or GetCurrentResourceName()
-    return api:createAttachment(id, definition, ownerResource)
+RegisterKeyMapping("TOGGLE_CURSOR_STATE", "Cursor", "keyboard", "m")
+
+exports("SetCursor", function(...)
+    return Cursor:set(...)
 end)
 
-local methods = {
-    "getAttachment",
-    "getAttachmentEntity",
-    "destroyAttachment",
-    "setAttachmentOffset",
-    "addAttachmentSound",
-    "removeAttachmentSound",
-    "addAttachmentParticle",
-    "removeAttachmentParticle",
-    "setAttachmentParticleOffset",
-}
-
-for _, method in ipairs(methods) do
-    exports(method, function(...)
-        return api[method](api, ...)
-    end)
-end
-
-RegisterNetEvent("aquiver::attachments::update", function(targetSource, id, definition, revision)
-    attachments:update(targetSource, id, definition, revision)
+exports("GetCursor", function()
+    return Cursor:get()
 end)
 
-RegisterNetEvent("aquiver::attachments::delete", function(targetSource, id, revision)
-    attachments:delete(targetSource, id, revision)
+exports("ForceCursor", function(...)
+    return Cursor:force(...)
 end)
 
-RegisterNetEvent("aquiver::attachments::snapshot", function(state, revision)
-    attachments:snapshot(state, revision)
-end)
+-- local AttachmentManager = require("runtime.client.attachment_manager")
+-- local AttachmentAPI = require("runtime.client.attachment_api")
 
-Citizen.CreateThread(function()
-    TriggerServerEvent("aquiver::attachments::requestSync")
+-- local attachments = AttachmentManager:new()
+-- local api = AttachmentAPI:new(attachments)
 
-    while true do
-        attachments:reconcile()
-        Citizen.Wait(500)
-    end
-end)
+-- exports("createAttachment", function(id, definition)
+--     local ownerResource = GetInvokingResource() or GetCurrentResourceName()
+--     return api:createAttachment(id, definition, ownerResource)
+-- end)
 
-AddEventHandler("onResourceStop", function(resourceName)
-    if resourceName == GetCurrentResourceName() then
-        attachments:destroy()
-    end
-end)
+
+-- RegisterNetEvent("aquiver::attachments::update", function(targetSource, id, definition, revision)
+--     attachments:update(targetSource, id, definition, revision)
+-- end)
+
+-- RegisterNetEvent("aquiver::attachments::delete", function(targetSource, id, revision)
+--     attachments:delete(targetSource, id, revision)
+-- end)
+
+-- RegisterNetEvent("aquiver::attachments::snapshot", function(state, revision)
+--     attachments:snapshot(state, revision)
+-- end)
+
+-- Citizen.CreateThread(function()
+--     TriggerServerEvent("aquiver::attachments::requestSync")
+
+--     while true do
+--         attachments:reconcile()
+--         Citizen.Wait(500)
+--     end
+-- end)
+
+-- AddEventHandler("onResourceStop", function(resourceName)
+--     if resourceName == GetCurrentResourceName() then
+--         attachments:destroy()
+--     end
+-- end)

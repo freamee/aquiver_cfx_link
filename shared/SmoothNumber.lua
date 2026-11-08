@@ -1,4 +1,3 @@
-local Smooth = require("shared.animation.Smooth")
 local Linear = require("shared.animation.Linear")
 
 ---@class SmoothNumber : OxClass
